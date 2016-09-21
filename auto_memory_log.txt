@@ -1,0 +1,6 @@
+26	2016	9	7	oop_week_9_notes	false	.	0
+27	2016	9	7	database_week_9_quizlet_and_notes	false	.	0
+29	2016	9	7	networking_chapter_11_quizlet_and_notes	true	1-2	5	.	1
+26	2016	9	8	raspberry_pi_flash_led_via_terminal_and_python	false	.	0
+28	2016	9	8	oop_week_3_notes	true	1-20	21-39	.	2
+28	2016	9	9	database_week_5_quizlet_and_notes	false	.	0

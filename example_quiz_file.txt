@@ -1,0 +1,4 @@
+1
+shutdown -h now	Shut down the system immediately.
+ls	Display directory contents.
+cd	Used to change directories.

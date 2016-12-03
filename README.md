@@ -8,3 +8,12 @@ Classes TestManager.java, Quiz.java, Question.java, and TestManagerLauncher.java
 Classes MemoryLog.java, DateComparator.java, Item.java and OurDate.java belong to the memorylog package.
   
   -In these classes you will find code that allows the user to use the spaced repitition part of the software (particularly TestManager.java).
+  
+Installation Instructions:
+
+1. Download all files, make two sibling directories: "memorylog" and "quizletcopy"
+2. Place TestManager.java, Quiz.java, Question.java, and TestManagerLauncher.java into the quizletcopy directory.
+3. Place MemoryLog.java, DateComparator.java, Item.java and OurDate.java into the memorylog directory.
+4. Make a directory that will hold your quizzes....
+
+To be completed

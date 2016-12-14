@@ -14,3 +14,22 @@ At this point the installation is done, but the software won't have anything to 
 3. On the next line, think of a question you want to enter. Write it's answer, and then tab once (You can have multiple answers as long as they are tab separated).
 4. Write the question.
 5. Save your file. You can put it anywhere, but keep track of the path.
+
+Now we're going to set up the configuration file so that the program can find your quiz.
+
+1. Start editing the configuration.txt in quizletcopy.
+2. On the first line, type the subject of the quiz you just made (perhaps just 'Other').
+  - This will correspond with the '1' that you entered in your test from before. You can specify subjects for new quizzes by adding other lines below this one (with no blank lines - see example file).
+3. Press enter twice (so there's a blank line above your cursor).
+4. Type the path of your quiz.
+
+Now your quiz is set up. You can find it by running the program (MemoryLog.class) and typing 3 for 'Take quiz.'. Now we're going to set up an entry for it so that you can use the program as a spaced repitition helper.
+
+1. Ensure that the auto_memory_log.txt file is entirely empty.
+2. In the program menu (run the program), select 4 to add an entry.
+3. "Add this" means how many days inbetween reviewing there are. It's probably best to start with 1.
+4. Enter the date on which it will appear in the program (probably choose the current date).
+5. Name your entry.
+6. You can decide if your entry has modifiers. For example, if you have a set of math problems, you can have it tell you to do the odd problems on one reviewing and the even problems on the next reviewing. Modifiers are simply strings that you enter.
+
+You should have your entry set up now, when you say to display entries, your entry should appear there as long as it's review date is either today or in the past.

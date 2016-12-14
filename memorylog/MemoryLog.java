@@ -20,7 +20,7 @@ class MemoryLog {
 	public MemoryLog() {
 		scan = new Scanner(System.in);
 		entries = new ArrayList<Item>();
-		itemList = new File("/home/dylan/Desktop/my_files/memory_log_v3/memorylog/auto_memory_log.txt");
+		itemList = new File("auto_memory_log.txt");
 		date = LocalDate.now();
 		loadEntries();
 	}

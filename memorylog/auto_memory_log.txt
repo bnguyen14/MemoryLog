@@ -1,0 +1,156 @@
+38	2016	11	15	networking_chapter_3_quizlet_and_notes	true	1-2	3	.	1
+11	2016	11	16	networking_chapter_7_quizlet_and_notes	true	1	2	.	2
+23	2016	11	16	operating_systems_week_10_quizlet_and_notes	true	1-22	23-43	.	2
+25	2016	11	16	convert_between_binary-octal-decimal	false	.	0
+25	2016	11	17	operating_systems_week_5-7_quizlet_and_notes	true	1-27	28-56	.	2
+22	2016	11	18	operating_systems_week_13_quizlet	false	.	0
+25	2016	11	18	operating_systems_week_2_quizlet_and_notes	false	.	0
+27	2016	11	18	database_week_11_quizlet_and_notes	false	.	0
+16	2016	11	19	networking_learning_1_quizlet	false	.	0
+26	2016	11	19	database_week_2_quizlet_and_notes	false	.	0
+28	2016	11	19	networking_chapter_5_quizlet_and_notes	true	1	2	3	.	3
+24	2016	11	20	database_week_9_quizlet_and_notes	false	.	0
+29	2016	11	20	database_week_7_quizlet_and_notes	false	.	0
+30	2016	11	21	oop_1_quizlet	false	.	0
+30	2016	11	22	oop_week_10_notes	true	1-14	15-28	.	2
+30	2016	11	22	oop_2_quizlet	false	.	0
+30	2016	11	24	linux_commands_3	false	.	0
+30	2016	11	25	calculus_test_1_solutions_part_b	true	v.A	v.B	.	2
+31	2016	11	25	oop_week_12_notes	true	1-21	22-40	.	2
+16	2016	11	26	linux_commands_4	false	.	0
+24	2016	11	26	networking_chapter_8_quizlet_and_notes	true	1	2-3	.	2
+33	2016	11	26	oop_week_4_notes	false	.	0
+35	2016	11	27	networking_chapter_4_quizlet_and_notes	true	1-2	3-4	.	1
+35	2016	11	27	essential_mathematics_trig_test_1-6	true	A	B	.	1
+25	2016	11	28	database_week_4_quizlet_and_notes	false	.	0
+32	2016	11	29	convert_between_binary-decimal-ieee	false	.	0
+26	2016	11	30	database_week_10_quizlet_and_notes	false	.	0
+13	2016	12	1	operating_systems_week_11_quizlet_and_notes	true	OA8	1-13	14-27	.	2
+35	2016	12	1	networking_chapter_6_quizlet_and_notes	true	1	2	.	1
+16	2016	12	4	operating_systems_week_4_quizlet_and_notes	false	.	0
+33	2016	12	5	oop_week_5_notes	true	1-19	20-34	.	1
+30	2016	12	10	database_review_trigger-function/trigger_creation	false	.	0
+30	2016	12	11	operating_systems_week_9_quizlet_and_notes	false	.	0
+30	2016	12	11	operating_systems_week_9.1_quizlet_and_notes_17-30	false	.	0
+30	2016	12	12	database_review_functions	false	.	0
+9	2016	12	13	linux_commands_5	false	.	0
+15	2016	12	13	database_week_8_quizlet_and_notes	false	.	0
+25	2016	12	13	operating_systems_week_3_quizlet_and_notes	false	.	0
+10	2016	12	14	calculus_test_2_solutions_part_b	true	v.A	v.B	.	2
+35	2016	12	14	oop_review_serialized_reading_writing	false	.	0
+2	2016	12	15	web_programming_13_quizlet	false	.	0
+3	2016	12	15	processor_architecture_gates_and_truth_tables_quiz	true	forwards	backwards	.	2
+7	2016	12	15	web_programming_9.1_quizlet	false	.	0
+7	2016	12	15	c_language_8_quizlet	false	.	0
+8	2016	12	15	login_national_instruments	false	.	0
+19	2016	12	15	login_mycic	false	.	0
+22	2016	12	15	web_programming_4_quizlet	false	.	0
+27	2016	12	15	processor_architecture_symbols_1	false	.	0
+35	2016	12	15	calculus_test_1_solutions_part_a	true	v.A	v.B	.	2
+35	2016	12	15	oop_week_9_notes	false	.	0
+4	2016	12	16	web_programming_12_quizlet	false	.	0
+5	2016	12	16	data_structures_3_quizlet	false	.	0
+8	2016	12	16	processor_architecture_12_quizlet	false	.	0
+13	2016	12	16	login_health_insurance	false	.	0
+18	2016	12	16	processor_architecture_8_quizlet	false	.	0
+4	2016	12	17	web_programming_10_quizlet	false	.	0
+4	2016	12	17	data_structures_8_quizlet	false	.	0
+9	2016	12	17	web_programming_7_quizlet	false	.	0
+9	2016	12	17	c_language_linked_list_practice	true	Create_Linked_List	Get_Index	.	2
+14	2016	12	17	database_week_12_quizlet_and_notes	false	.	0
+15	2016	12	17	processor_architecture_lab_7_conversions	false	.	0
+5	2016	12	18	processor_architecture_processor_architectures_drawings	false	.	0
+5	2016	12	18	processor_architecture_week_6_practice	false	.	0
+5	2016	12	18	login_mynoise	false	.	0
+5	2016	12	18	c_language_10_quizlet	false	.	0
+7	2016	12	18	web_programming_6.1_quizlet	false	.	0
+9	2016	12	18	processor_architecture_13_quizlet	false	.	0
+9	2016	12	18	c_language_9_quizlet	false	.	0
+9	2016	12	18	c_language_7_quizlet	false	.	0
+13	2016	12	18	processor_architecture_7_quizlet	false	.	0
+22	2016	12	18	login_minecraft	false	.	0
+26	2016	12	18	login_google	false	.	0
+30	2016	12	18	web_programming_practice_basic_html_page	false	.	0
+30	2016	12	18	c_language_practice_scanf()_checks	false	.	0
+7	2016	12	18	tighten_emilys_screws_and_clean_pc	false	.	0
+6	2016	12	19	web_programming_9_quizlet	false	.	0
+7	2016	12	19	web_programming_8_quizlet	false	.	0
+8	2016	12	19	login_texidium	false	.	0
+15	2016	12	19	web_programming_7.1_quizlet	false	.	0
+30	2016	12	19	database_week_1_quizlet_and_notes	false	.	0
+30	2016	12	19	practice_cordage	false	.	0
+40	2016	12	19	operating_systems_week_1_quizlet_and_notes	true	1-14	15-29	.	1
+7	2016	12	20	processor_architecture_10_quizlet	false	.	0
+7	2016	12	20	c_language_1_quizlet	false	.	0
+17	2016	12	20	networking_chapter_11_quizlet_and_notes	true	1-2	5	.	2
+25	2016	12	20	processor_architecture_4_quizlet	false	.	0
+26	2016	12	20	data_structures_practice_insertion_sort	false	.	0
+28	2016	12	20	login_steam	false	.	0
+8	2016	12	21	web_programming_11_quizlet	false	.	0
+8	2016	12	21	data_structures_6_quizlet	false	.	0
+8	2016	12	21	data_structures_7_quizlet	false	.	0
+10	2016	12	21	web_programming_2_quizlet	false	.	0
+13	2016	12	21	c_language_6_quizlet	false	.	0
+13	2016	12	21	processor_architecture_11_quizlet	false	.	0
+14	2016	12	21	login_xbox	false	.	0
+15	2016	12	21	processor_architecture_9_quizlet	false	.	0
+20	2016	12	21	login_turbotax_and_review_security_pin	false	.	0
+22	2016	12	21	login_linkedin	false	.	0
+25	2016	12	21	processor_architecture_5.1_quizlet	false	.	0
+27	2016	12	22	processor_architecture_3_quizlet	false	.	0
+29	2016	12	22	login_facebook	false	.	0
+30	2016	12	22	linux_commands_2	false	.	0
+9	2016	12	23	web_programming_6_quizlet	false	.	0
+10	2016	12	23	linux_commands_6	false	.	0
+11	2016	12	23	web_programming_2.1_quizlet	false	.	0
+10	2016	12	24	operating_systems_week_8_quizlet_and_notes_1-16	false	.	0
+10	2016	12	24	login_spore	false	.	0
+13	2016	12	24	data_structures_5_quizlet	false	.	0
+18	2016	12	24	web_programming_5_quizlet	false	.	0
+21	2016	12	24	login_amazon	false	.	0
+30	2016	12	24	data_structures_1_quizlet	false	.	0
+40	2016	12	24	raspberry_pi_flash_led_via_terminal_and_python	false	.	0
+17	2016	12	25	login_cibc_and_telephone_password	false	.	0
+22	2016	12	25	data_structures_review_merge_sort	false	.	0
+25	2016	12	25	data_structures_2_quizlet	false	.	0
+40	2016	12	25	oop_review_file_writing/reading	false	.	0
+12	2016	12	26	login_battle.net	false	.	0
+14	2016	12	26	login_github	false	.	0
+15	2016	12	26	processor_architecture_5_quizlet	false	.	0
+20	2016	12	26	web_programming_practice_usemap	false	.	0
+22	2016	12	26	data_structures_4_quizlet	false	.	0
+24	2016	12	27	operating_systems_week_12_quizlet_and_notes	true	1-15	16-30	.	1
+24	2016	12	27	processor_architecture_flowchart_symbols	true	forwards	backwards	.	2
+15	2016	12	28	processor_architecture_practice_week_4	true	1	2	.	1
+22	2016	12	28	processor_architecture_6_quizlet	false	.	0
+30	2016	12	28	raspberry_pi_1	false	.	0
+30	2016	12	28	database_week_3_quizlet_and_notes	false	.	0
+30	2016	12	28	convert_between_binary-hex-decimal	false	.	0
+30	2016	12	28	c_language_4_quizlet	false	.	0
+15	2016	12	29	calculus_practice_centroids	true	1	2	.	1
+15	2016	12	29	login_discord	false	.	0
+24	2016	12	29	login_jobs.gc.ca	false	.	0
+40	2016	12	29	oop_week_7_notes	true	1-13	14-26	.	2
+22	2016	12	30	c_language_5_quizlet	false	.	0
+40	2016	12	31	networking_chapter_10_quizlet_and_notes	true	1	2	.	1
+18	2017	1	1	login_skype	false	.	0
+24	2017	1	1	login_telus_myaccount_and_voicemail	false	.	0
+30	2017	1	3	calculus_test_2_solutions_part_a	true	v.A	v.B	.	1
+24	2017	1	5	login_linux	false	.	0
+33	2017	1	5	processor_architecture_1_quizlet	false	.	0
+26	2017	1	6	login_janus	false	.	0
+33	2017	1	6	processor_architecture_series-parallel_review	true	1	2	.	2
+49	2017	1	7	linux_commands_1	false	.	0
+40	2017	1	8	networking_chapter_1_quizlet_and_notes	true	1-2	3-4	.	2
+27	2017	1	10	processor_architecture_bcd_practice	true	1	2	.	1
+27	2017	1	10	web_programming_3_quizlet	false	.	0
+30	2017	1	10	c_language_2_quizlet	false	.	0
+30	2017	1	10	c_language_3_quizlet	false	.	0
+43	2017	1	10	oop_week_3_notes	true	1-20	21-39	.	1
+37	2017	1	12	web_programming_1_quizlet	false	.	0
+45	2017	1	12	database_week_5_quizlet_and_notes	false	.	0
+45	2017	1	12	calculus_practice_moments	false	.	0
+33	2017	1	14	c_language_5.1_quizlet	false	.	0
+43	2017	1	15	oop_3_quizlet	false	.	0
+36	2017	1	18	processor_architecture_2_quizlet	false	.	0
+49	2017	1	21	oop_week_2_notes	false	.	0

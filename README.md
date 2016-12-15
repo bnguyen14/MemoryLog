@@ -33,3 +33,7 @@ Now your quiz is set up. You can find it by running the program (MemoryLog.class
 6. You can decide if your entry has modifiers. For example, if you have a set of math problems, you can have it tell you to do the odd problems on one reviewing and the even problems on the next reviewing. Modifiers are simply strings that you enter.
 
 You should have your entry set up now, when you say to display entries, your entry should appear there as long as it's review date is either today or in the past.
+
+IMPORTANT:
+
+In order to properly execute this program, you need to execute it from the folder that holds memorylog and quizlet copy. This either consists of running it from the command line while in that folder, or creating your own script to execute it from that folder. The program uses relative directories to find the configuration files, and until I change this, just make sure you're executing so that these directories can be found.

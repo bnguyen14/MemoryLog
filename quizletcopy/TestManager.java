@@ -37,8 +37,8 @@ public class TestManager {
 	public TestManager() {
 		quizzes = new ArrayList<Quiz>();
 		input = new Scanner(System.in);
-		configFilePath = new String("configuration.txt");
-		savedQuizPath = new String("savedQuiz.txt");
+		configFilePath = new String("quizletcopy/configuration.txt");
+		savedQuizPath = new String("quizletcopy/savedQuiz.txt");
 	}//End constructor()
 
 	//Main part of program, shows the menu, is the interface through which actions are performed.

@@ -10,7 +10,7 @@ Installation Instructions:
 At this point the installation is done, but the software won't have anything to use. We'll now create quiz in a text file, let the program be able to access it, and then create an entry for it in the program. You can see the example configuration.txt as well as the format of the quiz files in the root directory.
 
 1. Create a new file and start editing it.
-2. Put the number 1 as the first line in the file. (We'll use this later.)
+2. Put the number 0 as the first line in the file. (We'll use this later.)
 3. On the next line, think of a question you want to enter. Write it's answer, and then tab once (You can have multiple answers as long as they are tab separated).
 4. Write the question.
 5. Save your file as a .txt (IMPORTANT). You can put it anywhere, but keep track of the path.
@@ -19,7 +19,7 @@ Now we're going to set up the configuration file so that the program can find yo
 
 1. Start editing the configuration.txt in quizletcopy.
 2. On the first line, type the subject of the quiz you just made (perhaps just 'Other').
-  - This will correspond with the '1' that you entered in your test from before. You can specify subjects for new quizzes by adding other lines below this one (with no blank lines - see example file).
+  - This will correspond with the '0' that you entered in your test from before. You can specify subjects for new quizzes by adding other lines below this one (with no blank lines - see example file).
 3. Press enter twice (so there's a blank line above your cursor).
 4. Type the path of your quiz.
 

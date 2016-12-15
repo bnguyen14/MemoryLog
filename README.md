@@ -13,7 +13,7 @@ At this point the installation is done, but the software won't have anything to 
 2. Put the number 1 as the first line in the file. (We'll use this later.)
 3. On the next line, think of a question you want to enter. Write it's answer, and then tab once (You can have multiple answers as long as they are tab separated).
 4. Write the question.
-5. Save your file. You can put it anywhere, but keep track of the path.
+5. Save your file as a .txt (IMPORTANT). You can put it anywhere, but keep track of the path.
 
 Now we're going to set up the configuration file so that the program can find your quiz.
 

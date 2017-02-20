@@ -20,7 +20,7 @@ At this point the installation is done, but the software won't have anything to 
 Now we're going to set up the configuration file so that the program can find your quiz.
 
 1. Start editing the configuration.txt in quizletcopy.
-2. On the first line, type the subject of the quiz you just made (perhaps just 'Other').
+2. On the first line, type the subject of the quiz you just made (for example, "programming_101_quizzes"). 
   - This will correspond with the '0' that you entered in your test from before. You can specify subjects for new quizzes by adding other lines below this one, starting with "1". 
 3. Press enter twice (so there's a blank line above your cursor).
 4. Type the absolute path of your quiz.

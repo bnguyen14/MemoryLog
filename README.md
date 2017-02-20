@@ -3,10 +3,10 @@ A basic leitner-style spaced repitition studying program. Written for the comman
   
 Installation Instructions:
 
-It should be noted that this software is designed for use on Linux. In order to use it on Windows (I used to use it on Windows before I discovered Linux), you simply need to change the paths of the configuration files. Edit MemoryLog.java and TestManager.java. When you scroll down, you'll find some file paths that are Linux-style. Just swap the '/' with a '\' and you should be good to go. (There's only three lines to edit).
+It should be noted that this software is designed for use on Linux. In order to use it on Windows you simply need to change the paths of the configuration files. Edit MemoryLog.java and TestManager.java. When you scroll down, you'll find some file paths that are Linux-style. Just swap the '/' with a '\\' and you should be good to go. (There's only three lines to edit).
 
-1. Place memorylog and quizletcopy directories together.
-2. Delete contents of savedQuiz.txt and configuration.txt in quizletcopy, auto_memory_log.txt in memorylog.
+1. Install the Java JDK so that you can compile the source.
+2. Place memorylog and quizletcopy directories together.
 3. Compile TestManagerLauncher.java in quizletcopy, and MemoryLog.java in memorylog.
 
 At this point the installation is done, but the software won't have anything to use. We'll now create quiz in a text file, let the program be able to access it, and then create an entry for it in the program. You can see the example configuration.txt as well as the format of the quiz files in the root directory.
@@ -21,20 +21,20 @@ Now we're going to set up the configuration file so that the program can find yo
 
 1. Start editing the configuration.txt in quizletcopy.
 2. On the first line, type the subject of the quiz you just made (perhaps just 'Other').
-  - This will correspond with the '0' that you entered in your test from before. You can specify subjects for new quizzes by adding other lines below this one (with no blank lines - see example file).
+  - This will correspond with the '0' that you entered in your test from before. You can specify subjects for new quizzes by adding other lines below this one, starting with "1". 
 3. Press enter twice (so there's a blank line above your cursor).
-4. Type the path of your quiz.
+4. Type the absolute path of your quiz.
 
 Now your quiz is set up. You can find it by running the program (MemoryLog.class) and typing 3 for 'Take quiz.'. Now we're going to set up an entry for it so that you can use the program as a spaced repitition helper.
 
-1. Ensure that the auto_memory_log.txt file is entirely empty.
-2. In the program menu (run the program), select 4 to add an entry.
-3. "Add this" means how many days inbetween reviewing there are. It's probably best to start with 1.
-4. Enter the date on which it will appear in the program (probably choose the current date).
-5. Name your entry.
-6. You can decide if your entry has modifiers. For example, if you have a set of math problems, you can have it tell you to do the odd problems on one reviewing and the even problems on the next reviewing. Modifiers are simply strings that you enter.
+1. In the program menu (run the program), select 4 to add an entry.
+  - If you mess up, just complete the creation and then delete it afterwards.
+2. "Add this" means how many days inbetween reviewing there are. It's probably best to start with 1.
+3. Enter the date on which it will appear in the program (probably choose the current date).
+4. Name your entry.
+5. You can decide if your entry has modifiers. For example, if you have a set of math problems, you can have it tell you to do the odd problems on one reviewing and the even problems on the next reviewing. Modifiers are simply strings that you enter.
 
-You should have your entry set up now, when you say to display entries, your entry should appear there as long as it's review date is either today or in the past.
+You should have your entry set up now, when you say to display today's entries, your entry should appear there as long as it's review date is either today or in the past.
 
 IMPORTANT:
 

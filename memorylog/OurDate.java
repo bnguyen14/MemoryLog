@@ -130,5 +130,4 @@ public class OurDate {
 	public void setLeapYear() {
 		months[1] = 29;
 	}
-	
 } 

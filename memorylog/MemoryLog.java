@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.io.File;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import quizletcopy.*;
 
 class MemoryLog {
 
@@ -460,7 +459,6 @@ class MemoryLog {
 	
 	//lets the user take a pre-written quiz.
 	public void takeQuiz() {
-		//run takeQuiz() from quizletcopy
 		TestManager testManager = new TestManager();
 		boolean noExceptionThrown = true;
 		try {

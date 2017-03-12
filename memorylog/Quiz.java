@@ -1,4 +1,4 @@
-package quizletcopy;
+package memorylog;
 import java.util.ArrayList;
 
 /*

@@ -1,4 +1,4 @@
-package quizletcopy;
+package memorylog;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ public class TestManager {
 	public TestManager() {
 		quizzes = new ArrayList<Quiz>();
 		input = new Scanner(System.in);
-		configFilePath = new String("quizletcopy/configuration.txt");
-		savedQuizPath = new String("quizletcopy/savedQuiz.txt");
+		configFilePath = new String("memorylog/configuration.txt");
+		savedQuizPath = new String("memorylog/savedQuiz.txt");
 	}//End constructor()
 
 	//Main part of program, shows the menu, is the interface through which actions are performed.
@@ -49,7 +49,7 @@ public class TestManager {
 		int lowestMenuChoice = 0;
 		int highestMenuChoice = 2;
 
-		//Display the menu and receive user input.\
+			//Display the menu and receive user input.
 		do {
 			System.out.print("1. Take Quiz\n2. Load Quizes\n0. Exit\nChoice: ");
 			menuChoice = getUserInput(lowestMenuChoice,highestMenuChoice,"Choice: ");

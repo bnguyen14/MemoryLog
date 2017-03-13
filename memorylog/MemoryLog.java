@@ -51,6 +51,7 @@ class MemoryLog {
 			int tempMonth = 0;
 			int tempDay = 0;
 			String tempTitle = null;
+			boolean tempHasQuiz = false;
 			boolean tempToggleable = false;
 			ArrayList<String> tempModifiers = new ArrayList<String>();
 			int tempModifierIdentifier = 0;
@@ -108,11 +109,24 @@ class MemoryLog {
 				offset++;
 				sb = new StringBuilder();
 
+				//Get the hasQuiz from file
+				for (;record.charAt(offset) != '\t';offset++) {
+					sb.append(record.charAt(offset));
+				}
+				if (sb.toString().equals("1")) {
+					tempHasQuiz = true;
+				}
+				else {
+					tempHasQuiz = false;
+				}
+				offset++;
+				sb = new StringBuilder();
+
 				//Get the toggleable from file
 				for (;record.charAt(offset) != '\t';offset++) {
 					sb.append(record.charAt(offset));
 				}
-				if (sb.toString().equals("true")) {
+				if (sb.toString().equals("1")) {
 					tempToggleable = true;
 				}
 				else {
@@ -138,7 +152,7 @@ class MemoryLog {
 				}
 				tempModifierIdentifier = Integer.parseInt(sb.toString());
 
-				entries.add(new Item(tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempToggleable, tempModifiers, tempModifierIdentifier ));
+				entries.add(new Item(tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier ));
 				sb = null;
 				tempModifiers = new ArrayList<String>();
 			}
@@ -349,7 +363,7 @@ class MemoryLog {
 
 	//Used to add a new entry into the ArrayList.
 	public void addEntry() {
-
+/*
 		//Create temporary variables that the user will enter information into.
 		int tempAddThis = 0;
 		int tempYear = 0;
@@ -432,7 +446,7 @@ class MemoryLog {
 		}
 		//Deallocate the memory.
 		tempTitle = null;
-		tempModifiers = null;
+		tempModifiers = null;*/
 	}
 
 	//Used to remove an entry from the ArrayList.

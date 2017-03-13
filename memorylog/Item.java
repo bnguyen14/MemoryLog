@@ -3,6 +3,9 @@ package memorylog;
 import java.util.ArrayList;
 public class Item {
 
+	//Quiz that is associated
+	private Quiz quiz;
+
 	//The number of days to add to the date.
 	private int addThis;
 
@@ -11,9 +14,8 @@ public class Item {
 
 	//The action that the user should take to push the item further down the list.
 	private String title;
-	
-	//Title of the related quiz (if there is one). 
-	private String quizName;
+
+	private boolean hasQuiz;
 
 	//If true, the item's action changes per review period(ie. review slides 1st/2nd of 1-10, 11-20).
 	private boolean toggleable;
@@ -25,25 +27,29 @@ public class Item {
 	private int modifierIdentifier;
 
 	public Item() {
-		this(0, null, null, false, null, 1);
+		this(0, null, null, false, false, null, 1);
 	}//End constructor()
 
-	public Item(int addThis, OurDate reviewOn, String title, boolean toggleable, ArrayList<String> modifiers, int modifierIdentifier) {
+	public Item(int addThis, OurDate reviewOn, String title, boolean hasQuiz, boolean toggleable, ArrayList<String> modifiers, int modifierIdentifier) {
+		this.quiz = quiz;
 		this.addThis = addThis;
 		this.reviewOn = reviewOn;
 		this.title = title;
+		this.hasQuiz = hasQuiz;
 		this.toggleable = toggleable;
 		this.modifiers = modifiers;
 		this.modifierIdentifier = modifierIdentifier;
 	}//End constructor(int, OurDate, String, boolean, ArrayList<String>)
 	
 	public Item(Item item) {
+		this.quiz = item.quiz;
 		this.addThis = item.addThis;
 		this.reviewOn = new OurDate();
 		this.reviewOn.setDay(item.reviewOn.getDay());
 		this.reviewOn.setMonth(item.reviewOn.getMonth());
 		this.reviewOn.setYear(item.reviewOn.getYear());
 		this.title = item.title;
+		this.hasQuiz = item.hasQuiz;
 		this.toggleable = item.toggleable;
 		this.modifiers = new ArrayList<String>();
 		for (int i = 0;i<item.modifiers.size();i++) {
@@ -55,6 +61,15 @@ public class Item {
 	//Returns a string representation of the object to be used in viewEntries() in MemoryLog.java.
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+
+		//Append a star to show that this entry has a quiz associated with it.
+		if (hasQuiz) {
+			sb.append("*");
+		}
+		else {
+			sb.append(" ");
+		}
+
 		sb.append(reviewOn.getYear() + "-" + String.format("%02d", reviewOn.getMonth()) + "-" + String.format("%02d", reviewOn.getDay()));
 		sb.append("(" + String.format("%03d", addThis) + ") ");
 		sb.append(title);

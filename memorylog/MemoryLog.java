@@ -12,15 +12,18 @@ class MemoryLog {
 	Scanner scan;
 	ArrayList<Item> entries;
 	File itemList;
+	TestManager testManager;
 
 	//Used to determine what day is today. Used with viewTodaysEntries().
 	LocalDate date;
 
-	public MemoryLog() {
+	public MemoryLog() throws java.io.FileNotFoundException {
 		scan = new Scanner(System.in);
 		entries = new ArrayList<Item>();
 		itemList = new File("memorylog/auto_memory_log.txt");
 		date = LocalDate.now();
+		testManager = new TestManager();
+		testManager.loadQuizzes();
 		loadEntries();
 	}
 
@@ -46,6 +49,7 @@ class MemoryLog {
 		if (noExceptionThrown) {
 
 			//Create temporary holders for all of the values in each line of the file.
+			Quiz tempQuiz = null;
 			int tempAddThis = 0;
 			int tempYear = 0;
 			int tempMonth = 0;
@@ -152,7 +156,20 @@ class MemoryLog {
 				}
 				tempModifierIdentifier = Integer.parseInt(sb.toString());
 
-				entries.add(new Item(tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier ));
+				//Assign the matching quiz reference in memory to tempQuiz. 
+				if(tempHasQuiz) {
+					boolean found = false;
+					for(int i = 0;i<testManager.quizzes.size();i++) {
+						if(testManager.quizzes.get(i).getTitle().equals(tempTitle)) {
+							tempQuiz = testManager.quizzes.get(i);
+							found = true;
+						}
+					}
+					if(found == false)
+						System.out.println("Unable to find matching quiz for " + tempTitle);
+				}	
+
+				entries.add(new Item(tempQuiz, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier ));
 				sb = null;
 				tempModifiers = new ArrayList<String>();
 			}
@@ -443,10 +460,7 @@ class MemoryLog {
 				entries.add(new Item(tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempToggleable, tempModifiers, tempModifierIdentifier));
 				System.out.println();
 			}
-		}
-		//Deallocate the memory.
-		tempTitle = null;
-		tempModifiers = null;*/
+		}*/
 	}
 
 	//Used to remove an entry from the ArrayList.
@@ -468,22 +482,6 @@ class MemoryLog {
 		else {
 			System.out.println("No entries to delete.");
 			pressEnter();
-		}
-	}
-	
-	//lets the user take a pre-written quiz.
-	public void takeQuiz() {
-		TestManager testManager = new TestManager();
-		boolean noExceptionThrown = true;
-		try {
-			testManager.loadQuizzes();
-		}
-		catch (java.io.FileNotFoundException e) {
-			System.out.println("Could not find config file, perhaps a quiz is missing?");
-			noExceptionThrown = false;
-		}
-		if (noExceptionThrown) {
-			testManager.takeQuiz();
 		}
 	}
 
@@ -549,7 +547,7 @@ class MemoryLog {
 					pressEnter();
 					break;
 				case 3:
-					takeQuiz();
+					testManager.takeQuiz();
 					break;
 				case 4:
 					addEntry();
@@ -571,7 +569,11 @@ class MemoryLog {
 
 	//Main method just runs the runMenu method in MemoryLog class.
 	public static void main(String[] args) {
-		MemoryLog log = new MemoryLog();
-		log.runMenu();
+		try {
+			MemoryLog log = new MemoryLog();
+			log.runMenu();
+		} catch (java.io.FileNotFoundException e) {
+			System.out.println("Failed to load quizzes: could not find config file/perhaps a quiz is missing?");
+		}
 	}
 }

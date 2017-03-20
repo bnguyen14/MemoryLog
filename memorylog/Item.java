@@ -27,10 +27,10 @@ public class Item {
 	private int modifierIdentifier;
 
 	public Item() {
-		this(0, null, null, false, false, null, 1);
+		this(null, 0, null, null, false, false, null, 1);
 	}//End constructor()
 
-	public Item(int addThis, OurDate reviewOn, String title, boolean hasQuiz, boolean toggleable, ArrayList<String> modifiers, int modifierIdentifier) {
+	public Item(Quiz quiz, int addThis, OurDate reviewOn, String title, boolean hasQuiz, boolean toggleable, ArrayList<String> modifiers, int modifierIdentifier) {
 		this.quiz = quiz;
 		this.addThis = addThis;
 		this.reviewOn = reviewOn;

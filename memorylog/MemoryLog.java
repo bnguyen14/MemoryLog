@@ -380,17 +380,20 @@ class MemoryLog {
 
 	//Used to add a new entry into the ArrayList.
 	public void addEntry() {
-/*
 		//Create temporary variables that the user will enter information into.
+		Quiz tempQuiz = null;
 		int tempAddThis = 0;
 		int tempYear = 0;
 		int tempMonth = 0;
 		int tempDay = 0;
 		String tempTitle = null;
+		boolean tempHasQuiz = false;
 		boolean tempToggleable = false;
 		ArrayList<String> tempModifiers = new ArrayList<String>();
 		int tempModifierIdentifier = 0;
 		boolean noExceptionThrown = true;
+
+		int holder;
 
 		//Enter values for temporary variables.
 		try {
@@ -408,15 +411,17 @@ class MemoryLog {
 			scan.nextLine();
 			System.out.print("Title: ");
 			tempTitle = scan.nextLine();
+			System.out.print("Has quiz? 0-Yes/1-No: ");
+			holder = scan.nextInt();
+			if(holder == 0)
+				tempHasQuiz = true;
+			else tempHasQuiz = false;
 			System.out.print("Toggleable? 0-Yes/1-No: ");
-			int holder = scan.nextInt();
+			holder = scan.nextInt();
 			scan.nextLine();
-			if (holder == 0) {
+			if (holder == 0)
 				tempToggleable = true;
-			}
-			else {
-				tempToggleable = false;
-			}
+			else tempToggleable = false;
 		}
 		catch (java.util.InputMismatchException e) {
 			System.out.println("Invalid input, cancelling addition.");
@@ -457,10 +462,10 @@ class MemoryLog {
 
 			//Add new entry into the ArrayList based on the entered values.
 			if (noExceptionThrown) {
-				entries.add(new Item(tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempToggleable, tempModifiers, tempModifierIdentifier));
+				entries.add(new Item(null, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier));
 				System.out.println();
 			}
-		}*/
+		}
 	}
 
 	//Used to remove an entry from the ArrayList.

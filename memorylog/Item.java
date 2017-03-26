@@ -93,7 +93,12 @@ public class Item {
 		sb.append(addThis + "\t");
 		sb.append(reviewOn.getYear() + "\t" + reviewOn.getMonth() + "\t" + reviewOn.getDay() + "\t");
 		sb.append(title + "\t");
-		sb.append(toggleable + "\t");
+		if(hasQuiz)
+			sb.append("1\t");
+		else sb.append("0\t");
+		if(toggleable)
+			sb.append("1\t");
+		else sb.append("0\t");
 		for (int i = 0;i<modifiers.size();i++) {
 			sb.append(modifiers.get(i).toString() + "\t");
 		}

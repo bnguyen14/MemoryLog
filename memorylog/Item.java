@@ -105,6 +105,19 @@ public class Item {
 		sb.append(".\t" + modifierIdentifier);
 		return sb.toString();
 	}//End toRecord()
+	
+	public float questionsPerDay() {
+		return (float)quiz.getQuestions().size()/(float)addThis;
+	}
+	
+	public boolean hasQuiz() {
+		return hasQuiz;
+	}
+	
+	//Getter for quiz.
+	public Quiz getQuiz() {
+		return quiz;
+	}
 
 	//Getter for addThis.
 	public int getAddThis() {

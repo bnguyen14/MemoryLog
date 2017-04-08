@@ -1,3 +1,0 @@
-0
-yes	Is the sky blue?
-no	Is the sky green?

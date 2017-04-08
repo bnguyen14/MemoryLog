@@ -497,12 +497,40 @@ class MemoryLog {
 	}
 
 	/*
+	 * Returns the average number of questions per day that the user should expect to complete.
+	 * It accomplishes this by adding up all of the questions from the quizzes scheduled to be completed
+	 * from today to the last scheduled quiz. It then divides this number by how many days there are in
+	 * that period.
+	 */
+	public float questionsPerDay() {
+		float questionsPerDay = 0;
+		int numDays = 0;
+		int questions = 0;
+		int firstDay = 0;
+		int lastDay = 0;
+		firstDay = entries.get(0).getReviewOn().calcDays();
+		lastDay = entries.get(entries.size()-1).getReviewOn().calcDays();
+		for(int i = 0;i<entries.size();i++) {
+			if(entries.get(i).hasQuiz()) {
+				questions += entries.get(i).getQuiz().getQuestions().size();
+			}
+		}
+		numDays = lastDay-firstDay+1;
+		
+		questionsPerDay = (float)questions/(float)numDays;
+		return questionsPerDay;
+	}
+
+	/*
 	 * Main part of the program, offers a menu that the user can choose options from. Allows
 	 * the user to view their entries, move them, and exit.
 	 */
 	public void runMenu() {
 
 		int choice = -1;
+
+		//Tell user the average number of questions per day he/she is currently at.
+		System.out.printf("Currently at %.2f questions per day.\n\n", questionsPerDay());
 
 		//While user does not say to quit the program.
 		while (choice != 0) {

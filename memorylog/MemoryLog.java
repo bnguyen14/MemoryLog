@@ -333,8 +333,12 @@ class MemoryLog {
 					scan.nextLine();
 					System.out.println();
 					if (checker == 0) {
+						float tempQuestionsPerDay = questionsPerDay();
 						processIndex(entries.get(index), addThis);
 						Collections.sort(entries, new DateComparator());
+						if(tempQuestionsPerDay != questionsPerDay()) {
+							System.out.printf("Questions per day updated: %.2f -> %.2f\n\n",tempQuestionsPerDay, questionsPerDay());
+						}
 					}
 					else {
 						System.out.println("Cancelled.");
@@ -498,26 +502,17 @@ class MemoryLog {
 
 	/*
 	 * Returns the average number of questions per day that the user should expect to complete.
-	 * It accomplishes this by adding up all of the questions from the quizzes scheduled to be completed
-	 * from today to the last scheduled quiz. It then divides this number by how many days there are in
-	 * that period.
+	 * It accomplishes this by adding up the calculated value of each registered quiz which is
+	 * found by dividing the number of questions by the number of days inbetween reviews.
 	 */
 	public float questionsPerDay() {
 		float questionsPerDay = 0;
-		int numDays = 0;
-		int questions = 0;
-		int firstDay = 0;
-		int lastDay = 0;
-		firstDay = entries.get(0).getReviewOn().calcDays();
-		lastDay = entries.get(entries.size()-1).getReviewOn().calcDays();
-		for(int i = 0;i<entries.size();i++) {
-			if(entries.get(i).hasQuiz()) {
-				questions += entries.get(i).getQuiz().getQuestions().size();
+		for (int i = 0;i<entries.size();i++) {
+			if (entries.get(i).hasQuiz()) {
+				questionsPerDay += entries.get(i).questionsPerDay();
 			}
 		}
-		numDays = lastDay-firstDay+1;
 		
-		questionsPerDay = (float)questions/(float)numDays;
 		return questionsPerDay;
 	}
 

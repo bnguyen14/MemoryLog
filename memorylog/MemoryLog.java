@@ -337,7 +337,7 @@ class MemoryLog {
 						processIndex(entries.get(index), addThis);
 						Collections.sort(entries, new DateComparator());
 						if(!tempQuestionsPerDay.equals(String.format("%.2f", questionsPerDay()))) {
-							System.out.printf("Questions per day updated: %.2f -> %.2f\n\n",tempQuestionsPerDay, questionsPerDay());
+							System.out.printf("Questions per day updated: %s -> %.2f\n\n",tempQuestionsPerDay, questionsPerDay());
 						}
 					}
 					else {

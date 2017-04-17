@@ -333,10 +333,10 @@ class MemoryLog {
 					scan.nextLine();
 					System.out.println();
 					if (checker == 0) {
-						float tempQuestionsPerDay = questionsPerDay();
+						String tempQuestionsPerDay = String.format("%.2f", questionsPerDay());
 						processIndex(entries.get(index), addThis);
 						Collections.sort(entries, new DateComparator());
-						if(tempQuestionsPerDay != questionsPerDay()) {
+						if(!tempQuestionsPerDay.equals(String.format("%.2f", questionsPerDay()))) {
 							System.out.printf("Questions per day updated: %.2f -> %.2f\n\n",tempQuestionsPerDay, questionsPerDay());
 						}
 					}

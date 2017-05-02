@@ -55,6 +55,7 @@ class MemoryLog {
 			int tempMonth = 0;
 			int tempDay = 0;
 			String tempTitle = null;
+			String tempHistory = null;
 			boolean tempHasQuiz = false;
 			boolean tempToggleable = false;
 			ArrayList<String> tempModifiers = new ArrayList<String>();
@@ -78,6 +79,14 @@ class MemoryLog {
 					sb.append(record.charAt(offset));
 				}
 				tempAddThis = Integer.parseInt(sb.toString());
+				offset++;
+				sb = new StringBuilder();
+
+				//Get the history of this entry
+				for(;record.charAt(offset) != '\t';offset++) {
+					sb.append(record.charAt(offset));
+				}
+				tempHistory = sb.toString();
 				offset++;
 				sb = new StringBuilder();
 
@@ -169,8 +178,7 @@ class MemoryLog {
 						System.out.println("Unable to find matching quiz for " + tempTitle);
 				}	
 
-				entries.add(new Item(tempQuiz, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier ));
-				sb = null;
+				entries.add(new Item(tempQuiz, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier ));
 				tempModifiers = new ArrayList<String>();
 			}
 		}
@@ -317,6 +325,7 @@ class MemoryLog {
 
 					//Show current record information
 					System.out.println(String.format("\nCurrent: ") + entries.get(index).toString());
+					System.out.println("History: " + entries.get(index).showHistory());
 					System.out.print("Set new addThis: ");
 					int addThis = scan.nextInt();
 					scan.nextLine();
@@ -364,11 +373,6 @@ class MemoryLog {
 			System.out.println("No entries today.");
 			pressEnter();
 		}
-
-		//Recover the memory.
-		today = null;
-		indexes = null;
-		passedIndexes = null;
 	}
 
 	public void printMenu() {
@@ -466,7 +470,7 @@ class MemoryLog {
 
 			//Add new entry into the ArrayList based on the entered values.
 			if (noExceptionThrown) {
-				entries.add(new Item(null, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier));
+				entries.add(new Item(null, null, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier));
 				System.out.println();
 			}
 		}

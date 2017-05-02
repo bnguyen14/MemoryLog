@@ -5,6 +5,9 @@ public class Item {
 
 	//Quiz that is associated
 	private Quiz quiz;
+	
+	//History of the entry
+	private String history;
 
 	//The number of days to add to the date.
 	private int addThis;
@@ -23,15 +26,19 @@ public class Item {
 	//Holds the possible split actions that change each review period.
 	private ArrayList<String> modifiers;
 
+	//Used to keep track of history of changes to alert user of progress.
+	private ArrayList<Integer> addThisHistory;
+
 	//Holds the current item from modifiers that user should next perform (ie. 1st, 2nd, etc.).
 	private int modifierIdentifier;
 
 	public Item() {
-		this(null, 0, null, null, false, false, null, 1);
+		this(null, null, 0, null, null, false, false, null, 1);
 	}//End constructor()
 
-	public Item(Quiz quiz, int addThis, OurDate reviewOn, String title, boolean hasQuiz, boolean toggleable, ArrayList<String> modifiers, int modifierIdentifier) {
+	public Item(Quiz quiz, String history, int addThis, OurDate reviewOn, String title, boolean hasQuiz, boolean toggleable, ArrayList<String> modifiers, int modifierIdentifier) {
 		this.quiz = quiz;
+		this.history = history;
 		this.addThis = addThis;
 		this.reviewOn = reviewOn;
 		this.title = title;
@@ -43,6 +50,7 @@ public class Item {
 	
 	public Item(Item item) {
 		this.quiz = item.quiz;
+		this.history = item.history;
 		this.addThis = item.addThis;
 		this.reviewOn = new OurDate();
 		this.reviewOn.setDay(item.reviewOn.getDay());
@@ -91,6 +99,7 @@ public class Item {
 	public String toRecord() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(addThis + "\t");
+		sb.append(history = "\t");
 		sb.append(reviewOn.getYear() + "\t" + reviewOn.getMonth() + "\t" + reviewOn.getDay() + "\t");
 		sb.append(title + "\t");
 		if(hasQuiz)
@@ -106,6 +115,12 @@ public class Item {
 		return sb.toString();
 	}//End toRecord()
 	
+
+	//Show the contents of the history variable.
+	public String showHistory() {
+		return history;
+	}
+
 	public float questionsPerDay() {
 		return (float)quiz.getQuestions().size()/(float)addThis;
 	}

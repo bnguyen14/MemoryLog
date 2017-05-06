@@ -96,11 +96,15 @@ public class Item {
 	public String toRecord() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(addThis + "\t");
-		for (int i = 0;i<addThisHistory.size();i++) {
-			sb.append(addThisHistory.get(i));
-			if(i<addThisHistory.size()-1)
-				sb.append(",");
-			else sb.append("\t");
+		if (addThisHistory.size() == 0)
+			sb.append("null\t");
+		else {
+			for (int i = 0;i<addThisHistory.size();i++) {
+				sb.append(addThisHistory.get(i));
+				if(i<addThisHistory.size()-1)
+					sb.append(",");
+				else sb.append("\t");
+			}
 		}
 		sb.append(reviewOn.getYear() + "\t" + reviewOn.getMonth() + "\t" + reviewOn.getDay() + "\t");
 		sb.append(title + "\t");
@@ -120,6 +124,9 @@ public class Item {
 
 	//Show the contents of the history variable.
 	public String showHistory() {
+		if(addThisHistory.size() == 0) {
+			return "None.";
+		}
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0;i<addThisHistory.size();i++) {
 			if (i == addThisHistory.size()-1) 

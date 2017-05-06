@@ -87,12 +87,15 @@ class MemoryLog {
 				for(;record.charAt(offset) != '\t';offset++) {
 					sb.append(record.charAt(offset));
 				}
-				String[] history = sb.toString().split(","); 
-				if (history.length > historySize) {
-					throw new java.lang.ArrayIndexOutOfBoundsException();
-				}
-				for (int i = 0;i<history.length;i++) {
-					tempHistory.add(Integer.parseInt(history[i]));
+				String[] history;
+				if (!sb.toString().equals("null")) {
+					history = sb.toString().split(","); 
+					if (history.length > historySize) {
+						throw new java.lang.ArrayIndexOutOfBoundsException();
+					}
+					for (int i = 0;i<history.length;i++) {
+						tempHistory.add(Integer.parseInt(history[i]));
+					}
 				}
 				offset++;
 				sb = new StringBuilder();
@@ -479,7 +482,9 @@ class MemoryLog {
 
 			//Add new entry into the ArrayList based on the entered values.
 			if (noExceptionThrown) {
-				entries.add(new Item(null, null, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier));
+				ArrayList<Integer> tempHistory = new ArrayList<Integer>();
+				tempHistory.add(tempAddThis);
+				entries.add(new Item(null, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier));
 				System.out.println();
 			}
 		}

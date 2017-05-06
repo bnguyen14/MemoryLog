@@ -13,6 +13,7 @@ class MemoryLog {
 	ArrayList<Item> entries;
 	File itemList;
 	TestManager testManager;
+	int historySize = 10;
 
 	//Used to determine what day is today. Used with viewTodaysEntries().
 	LocalDate date;
@@ -55,7 +56,7 @@ class MemoryLog {
 			int tempMonth = 0;
 			int tempDay = 0;
 			String tempTitle = null;
-			String tempHistory = null;
+			ArrayList<Integer> tempHistory = new ArrayList<Integer>();
 			boolean tempHasQuiz = false;
 			boolean tempToggleable = false;
 			ArrayList<String> tempModifiers = new ArrayList<String>();
@@ -86,7 +87,13 @@ class MemoryLog {
 				for(;record.charAt(offset) != '\t';offset++) {
 					sb.append(record.charAt(offset));
 				}
-				tempHistory = sb.toString();
+				String[] history = sb.toString().split(","); 
+				if (history.length > historySize) {
+					throw new java.lang.ArrayIndexOutOfBoundsException();
+				}
+				for (int i = 0;i<history.length;i++) {
+					tempHistory.add(Integer.parseInt(history[i]));
+				}
 				offset++;
 				sb = new StringBuilder();
 
@@ -180,6 +187,7 @@ class MemoryLog {
 
 				entries.add(new Item(tempQuiz, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier ));
 				tempModifiers = new ArrayList<String>();
+				tempHistory = new ArrayList<Integer>();
 			}
 		}
 	}
@@ -344,6 +352,7 @@ class MemoryLog {
 					if (checker == 0) {
 						String tempQuestionsPerDay = String.format("%.2f", questionsPerDay());
 						processIndex(entries.get(index), addThis);
+						entries.get(index).updateHistory(addThis,historySize);
 						Collections.sort(entries, new DateComparator());
 						if(!tempQuestionsPerDay.equals(String.format("%.2f", questionsPerDay()))) {
 							System.out.printf("Questions per day updated: %s -> %.2f\n\n",tempQuestionsPerDay, questionsPerDay());
@@ -606,6 +615,10 @@ class MemoryLog {
 			log.runMenu();
 		} catch (java.io.FileNotFoundException e) {
 			System.out.println("Failed to load quizzes: could not find config file/perhaps a quiz is missing?");
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+			System.out.println("Unable to read auto_memory_log.txt.");
+		} catch (java.lang.NumberFormatException e) {
+			System.out.println("Unable to read auto_memory_log.txt.");
 		}
 	}
 }

@@ -13,6 +13,7 @@ class MemoryLog {
 	ArrayList<Item> entries;
 	File itemList;
 	TestManager testManager;
+	int historySize = 10;
 
 	//Used to determine what day is today. Used with viewTodaysEntries().
 	LocalDate date;
@@ -55,6 +56,7 @@ class MemoryLog {
 			int tempMonth = 0;
 			int tempDay = 0;
 			String tempTitle = null;
+			ArrayList<Integer> tempHistory = new ArrayList<Integer>();
 			boolean tempHasQuiz = false;
 			boolean tempToggleable = false;
 			ArrayList<String> tempModifiers = new ArrayList<String>();
@@ -78,6 +80,23 @@ class MemoryLog {
 					sb.append(record.charAt(offset));
 				}
 				tempAddThis = Integer.parseInt(sb.toString());
+				offset++;
+				sb = new StringBuilder();
+
+				//Get the history of this entry
+				for(;record.charAt(offset) != '\t';offset++) {
+					sb.append(record.charAt(offset));
+				}
+				String[] history;
+				if (!sb.toString().equals("null")) {
+					history = sb.toString().split(","); 
+					if (history.length > historySize) {
+						throw new java.lang.ArrayIndexOutOfBoundsException();
+					}
+					for (int i = 0;i<history.length;i++) {
+						tempHistory.add(Integer.parseInt(history[i]));
+					}
+				}
 				offset++;
 				sb = new StringBuilder();
 
@@ -169,9 +188,9 @@ class MemoryLog {
 						System.out.println("Unable to find matching quiz for " + tempTitle);
 				}	
 
-				entries.add(new Item(tempQuiz, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier ));
-				sb = null;
+				entries.add(new Item(tempQuiz, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier ));
 				tempModifiers = new ArrayList<String>();
+				tempHistory = new ArrayList<Integer>();
 			}
 		}
 	}
@@ -317,6 +336,7 @@ class MemoryLog {
 
 					//Show current record information
 					System.out.println(String.format("\nCurrent: ") + entries.get(index).toString());
+					System.out.println("History: " + entries.get(index).showHistory());
 					System.out.print("Set new addThis: ");
 					int addThis = scan.nextInt();
 					scan.nextLine();
@@ -335,6 +355,7 @@ class MemoryLog {
 					if (checker == 0) {
 						String tempQuestionsPerDay = String.format("%.2f", questionsPerDay());
 						processIndex(entries.get(index), addThis);
+						entries.get(index).updateHistory(addThis,historySize);
 						Collections.sort(entries, new DateComparator());
 						if(!tempQuestionsPerDay.equals(String.format("%.2f", questionsPerDay()))) {
 							System.out.printf("Questions per day updated: %s -> %.2f\n\n",tempQuestionsPerDay, questionsPerDay());
@@ -364,11 +385,6 @@ class MemoryLog {
 			System.out.println("No entries today.");
 			pressEnter();
 		}
-
-		//Recover the memory.
-		today = null;
-		indexes = null;
-		passedIndexes = null;
 	}
 
 	public void printMenu() {
@@ -466,7 +482,9 @@ class MemoryLog {
 
 			//Add new entry into the ArrayList based on the entered values.
 			if (noExceptionThrown) {
-				entries.add(new Item(null, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier));
+				ArrayList<Integer> tempHistory = new ArrayList<Integer>();
+				tempHistory.add(tempAddThis);
+				entries.add(new Item(null, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier));
 				System.out.println();
 			}
 		}
@@ -602,6 +620,10 @@ class MemoryLog {
 			log.runMenu();
 		} catch (java.io.FileNotFoundException e) {
 			System.out.println("Failed to load quizzes: could not find config file/perhaps a quiz is missing?");
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+			System.out.println("Unable to read auto_memory_log.txt.");
+		} catch (java.lang.NumberFormatException e) {
+			System.out.println("Unable to read auto_memory_log.txt.");
 		}
 	}
 }

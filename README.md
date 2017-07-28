@@ -3,8 +3,6 @@ A basic leitner-style spaced repitition studying program. Written for the comman
   
 Installation Instructions:
 
-It should be noted that this software is designed for use on Linux. In order to use it on Windows you simply need to change the paths of the configuration files. Edit MemoryLog.java and TestManager.java. When you scroll down, you'll find some file paths that are Linux-style. Just swap the '/' with a '\\' and you should be good to go. (There's only three lines to edit).
-
 1. Install the Java JDK so that you can compile the source.
 2. Place memorylog and quizletcopy directories together.
 3. Compile TestManagerLauncher.java in quizletcopy, and MemoryLog.java in memorylog.

@@ -15,8 +15,6 @@ public class Item {
 	//The action that the user should take to push the item further down the list.
 	private String title;
 
-	private boolean hasQuiz;
-
 	//If true, the item's action changes per review period(ie. review slides 1st/2nd of 1-10, 11-20).
 	private boolean toggleable;
 
@@ -30,16 +28,15 @@ public class Item {
 	private int modifierIdentifier;
 
 	public Item() {
-		this(null, null, 0, null, null, false, false, null, 1);
+		this(null, null, 0, null, null, false, null, 1);
 	}//End constructor()
 
-	public Item(Quiz quiz, ArrayList<Integer> addThisHistory, int addThis, OurDate reviewOn, String title, boolean hasQuiz, boolean toggleable, ArrayList<String> modifiers, int modifierIdentifier) {
+	public Item(Quiz quiz, ArrayList<Integer> addThisHistory, int addThis, OurDate reviewOn, String title, boolean toggleable, ArrayList<String> modifiers, int modifierIdentifier) {
 		this.quiz = quiz;
 		this.addThisHistory = addThisHistory;
 		this.addThis = addThis;
 		this.reviewOn = reviewOn;
 		this.title = title;
-		this.hasQuiz = hasQuiz;
 		this.toggleable = toggleable;
 		this.modifiers = modifiers;
 		this.modifierIdentifier = modifierIdentifier;
@@ -54,7 +51,6 @@ public class Item {
 		this.reviewOn.setMonth(item.reviewOn.getMonth());
 		this.reviewOn.setYear(item.reviewOn.getYear());
 		this.title = item.title;
-		this.hasQuiz = item.hasQuiz;
 		this.toggleable = item.toggleable;
 		this.modifiers = new ArrayList<String>();
 		for (int i = 0;i<item.modifiers.size();i++) {
@@ -66,14 +62,6 @@ public class Item {
 	//Returns a string representation of the object to be used in viewEntries() in MemoryLog.java.
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-
-		//Append a star to show that this entry has a quiz associated with it.
-		if (hasQuiz) {
-			sb.append("*");
-		}
-		else {
-			sb.append(" ");
-		}
 
 		sb.append(reviewOn.getYear() + "-" + String.format("%02d", reviewOn.getMonth()) + "-" + String.format("%02d", reviewOn.getDay()));
 		sb.append("(" + String.format("%03d", addThis) + ") ");
@@ -108,9 +96,6 @@ public class Item {
 		}
 		sb.append(reviewOn.getYear() + "\t" + reviewOn.getMonth() + "\t" + reviewOn.getDay() + "\t");
 		sb.append(title + "\t");
-		if(hasQuiz)
-			sb.append("1\t");
-		else sb.append("0\t");
 		if(toggleable)
 			sb.append("1\t");
 		else sb.append("0\t");
@@ -146,10 +131,6 @@ public class Item {
 
 	public float questionsPerDay() {
 		return (float)quiz.getQuestions().size()/(float)addThis;
-	}
-	
-	public boolean hasQuiz() {
-		return hasQuiz;
 	}
 	
 	//Getter for quiz.

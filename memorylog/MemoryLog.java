@@ -12,7 +12,6 @@ class MemoryLog {
 	Scanner scan;
 	ArrayList<Item> entries;
 	File itemList;
-	TestManager testManager;
 	int historySize = 10;
 
 	//Used to determine what day is today. Used with viewTodaysEntries().
@@ -23,8 +22,6 @@ class MemoryLog {
 		entries = new ArrayList<Item>();
 		itemList = new File("memorylog/auto_memory_log.txt");
 		date = LocalDate.now();
-		testManager = new TestManager();
-		testManager.loadQuizzes();
 		loadEntries();
 	}
 
@@ -57,7 +54,6 @@ class MemoryLog {
 			int tempDay = 0;
 			String tempTitle = null;
 			ArrayList<Integer> tempHistory = new ArrayList<Integer>();
-			boolean tempHasQuiz = false;
 			boolean tempToggleable = false;
 			ArrayList<String> tempModifiers = new ArrayList<String>();
 			int tempModifierIdentifier = 0;
@@ -132,19 +128,6 @@ class MemoryLog {
 				offset++;
 				sb = new StringBuilder();
 
-				//Get the hasQuiz from file
-				for (;record.charAt(offset) != '\t';offset++) {
-					sb.append(record.charAt(offset));
-				}
-				if (sb.toString().equals("1")) {
-					tempHasQuiz = true;
-				}
-				else {
-					tempHasQuiz = false;
-				}
-				offset++;
-				sb = new StringBuilder();
-
 				//Get the toggleable from file
 				for (;record.charAt(offset) != '\t';offset++) {
 					sb.append(record.charAt(offset));
@@ -175,20 +158,7 @@ class MemoryLog {
 				}
 				tempModifierIdentifier = Integer.parseInt(sb.toString());
 
-				//Assign the matching quiz reference in memory to tempQuiz. 
-				if(tempHasQuiz) {
-					boolean found = false;
-					for(int i = 0;i<testManager.quizzes.size();i++) {
-						if(testManager.quizzes.get(i).getTitle().equals(tempTitle)) {
-							tempQuiz = testManager.quizzes.get(i);
-							found = true;
-						}
-					}
-					if(found == false)
-						System.out.println("Unable to find matching quiz for " + tempTitle);
-				}	
-
-				entries.add(new Item(tempQuiz, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier ));
+				entries.add(new Item(tempQuiz, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempToggleable, tempModifiers, tempModifierIdentifier ));
 				tempModifiers = new ArrayList<String>();
 				tempHistory = new ArrayList<Integer>();
 			}
@@ -353,13 +323,9 @@ class MemoryLog {
 					scan.nextLine();
 					System.out.println();
 					if (checker == 0) {
-						String tempQuestionsPerDay = String.format("%.2f", questionsPerDay());
 						processIndex(entries.get(index), addThis);
 						entries.get(index).updateHistory(addThis,historySize);
 						Collections.sort(entries, new DateComparator());
-						if(!tempQuestionsPerDay.equals(String.format("%.2f", questionsPerDay()))) {
-							System.out.printf("Questions per day updated: %s -> %.2f\n\n",tempQuestionsPerDay, questionsPerDay());
-						}
 					}
 					else {
 						System.out.println("Cancelled.");
@@ -390,11 +356,10 @@ class MemoryLog {
 	public void printMenu() {
 		System.out.print("1. View entries for today\n"
 				+ "2. View all entries\n"
-				+ "3. Take quiz\n"
-				+ "4. Add entry\n"
-				+ "5. Remove entry\n"
-				+ "6. Reload entries\n"
-				+ "7. Save entries\n"
+				+ "3. Add entry\n"
+				+ "4. Remove entry\n"
+				+ "5. Reload entries\n"
+				+ "6. Save entries\n"
 				+ "0. Exit\nChoice: ");
 	}
 
@@ -484,7 +449,7 @@ class MemoryLog {
 			if (noExceptionThrown) {
 				ArrayList<Integer> tempHistory = new ArrayList<Integer>();
 				tempHistory.add(tempAddThis);
-				entries.add(new Item(null, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempHasQuiz, tempToggleable, tempModifiers, tempModifierIdentifier));
+				entries.add(new Item(null, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempToggleable, tempModifiers, tempModifierIdentifier));
 				System.out.println();
 			}
 		}
@@ -519,31 +484,12 @@ class MemoryLog {
 	}
 
 	/*
-	 * Returns the average number of questions per day that the user should expect to complete.
-	 * It accomplishes this by adding up the calculated value of each registered quiz which is
-	 * found by dividing the number of questions by the number of days inbetween reviews.
-	 */
-	public float questionsPerDay() {
-		float questionsPerDay = 0;
-		for (int i = 0;i<entries.size();i++) {
-			if (entries.get(i).hasQuiz()) {
-				questionsPerDay += entries.get(i).questionsPerDay();
-			}
-		}
-		
-		return questionsPerDay;
-	}
-
-	/*
 	 * Main part of the program, offers a menu that the user can choose options from. Allows
 	 * the user to view their entries, move them, and exit.
 	 */
 	public void runMenu() {
 
 		int choice = -1;
-
-		//Tell user the average number of questions per day he/she is currently at.
-		System.out.printf("Currently at %.2f questions per day.\n\n", questionsPerDay());
 
 		//While user does not say to quit the program.
 		while (choice != 0) {
@@ -564,7 +510,7 @@ class MemoryLog {
 				choice = scan.nextInt();
 				System.out.println();
 				scan.nextLine();
-				while (choice < 0 || choice > 7) {
+				while (choice < 0 || choice > 6) {
 					System.out.print("Choice: ");
 					choice = scan.nextInt();
 					scan.nextLine();
@@ -575,7 +521,7 @@ class MemoryLog {
 				scan.nextLine();
 			}
 
-			if (choice > 0 && choice < 8) {			
+			if (choice > 0 && choice < 7) {			
 
 				//User has made a choice, time to do what they said.
 				switch (choice) {
@@ -593,19 +539,16 @@ class MemoryLog {
 					pressEnter();
 					break;
 				case 3:
-					testManager.takeQuiz();
-					break;
-				case 4:
 					addEntry();
 					break;
-				case 5:
+				case 4:
 					removeEntry();
 					System.out.println();
 					break;
-				case 6:
+				case 5:
 					loadEntries();
 					break;
-				case 7:
+				case 6:
 					saveEntries();
 					break;
 				}

@@ -1,4 +1,5 @@
-//Used to check subjects to see if there's any questions to do.
+package memorylog;
+
 public class SubjectChecker {
 	public static void main(String[] args) {
 	

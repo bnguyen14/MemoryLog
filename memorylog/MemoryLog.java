@@ -372,7 +372,6 @@ class MemoryLog {
 		int tempMonth = 0;
 		int tempDay = 0;
 		String tempTitle = null;
-		boolean tempHasQuiz = false;
 		boolean tempToggleable = false;
 		ArrayList<String> tempModifiers = new ArrayList<String>();
 		int tempModifierIdentifier = 0;
@@ -396,11 +395,6 @@ class MemoryLog {
 			scan.nextLine();
 			System.out.print("Title: ");
 			tempTitle = scan.nextLine();
-			System.out.print("Has quiz? 0-Yes/1-No: ");
-			holder = scan.nextInt();
-			if(holder == 0)
-				tempHasQuiz = true;
-			else tempHasQuiz = false;
 			System.out.print("Toggleable? 0-Yes/1-No: ");
 			holder = scan.nextInt();
 			scan.nextLine();

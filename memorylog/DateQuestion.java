@@ -1,13 +1,67 @@
 package memorylog;
 
 import java.util.ArrayList;
-public class Question {
+public class DateQuestion extends Question {
+	private int addThis;
+	private OurDate reviewOn;
+
+	public DateQuestion() {
+		super();
+		addThis=0;
+		reviewOn = null;
+	}
 	
-	//Holds a list of several possible answers to a question.
-	protected ArrayList<String> answers;
+	public DateQuestion(DateQuestion dateQuestion) {
+		super(dateQuestion.answers, dateQuestion.question);
+		this.addThis = dateQuestion.addThis;
+		this.reviewOn = new OurDate(dateQuestion.reviewOn);
+	}
+
+	public DateQuestion(String record, String recordDelimiter) {
+		answers = new ArrayList<String>();
+		String[] fields = record.split("\t");
+		addThis = Integer.parseInt(fields[0]);
+		reviewOn = new OurDate(Integer.parseInt(fields[3]), Integer.parseInt(fields[2]), Integer.parseInt(fields[1]));
+		question = fields[4];
+		for(int i = 5; i<fields.length;i++) {
+			answers.add(fields[i]);
+		}
+	}
+	
+	public OurDate getReviewOn() {
+		return this.reviewOn;
+	}
+	
+	//Returns a string that is written to a file to be read later.
+	public String toRecord(String recordDelimiter) {
+		StringBuilder sb = new StringBuilder();
+		//Write addThis
+		sb.append(addThis + recordDelimiter);
+	
+		//Write date
+		sb.append(reviewOn.getYear() + recordDelimiter);
+		sb.append(reviewOn.getMonth() + recordDelimiter);
+		sb.append(reviewOn.getDay() + recordDelimiter);
+
+		//Write the question.
+		sb.append(question + recordDelimiter);
+
+		//Write each answer that is in the answers ArrayList.
+		for (int i = 0;i<answers.size();i++) {
+			sb.append(answers.get(i) + recordDelimiter);
+		}
+		
+		return sb.toString();
+	}
+
+}
+
+
+	/*//Holds a list of several possible answers to a question.
+	private ArrayList<String> answers;
 	
 	//Holds a question.
-	protected String question;
+	private String question;
 	
 	public Question() {
 		this.question = null;
@@ -78,4 +132,4 @@ public class Question {
 	public String getQuestion() {
 		return question;
 	}//End getQuestion()
-}
+}*/

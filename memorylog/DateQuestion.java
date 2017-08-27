@@ -32,6 +32,14 @@ public class DateQuestion extends Question {
 		return this.reviewOn;
 	}
 	
+	public void increasePeriod() {
+		addThis = (int)(addThis + addThis*0.5);
+	}
+
+	public void decreasePeriod() {
+		addThis = 1;
+	}
+	
 	//Returns a string that is written to a file to be read later.
 	public String toRecord(String recordDelimiter) {
 		StringBuilder sb = new StringBuilder();

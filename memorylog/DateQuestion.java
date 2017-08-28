@@ -32,12 +32,24 @@ public class DateQuestion extends Question {
 		return this.reviewOn;
 	}
 	
-	public void increasePeriod() {
-		addThis = (int)(addThis + addThis*0.5);
+	public void increasePeriod(OurDate today) {
+		if(addThis%2 == 0) {
+			addThis = (int)(addThis + addThis*0.5);
+		} else {
+			addThis = 1+(int)(addThis + addThis*0.5);
+		}
+
+		reviewOn = new OurDate(today);
+
+		for(int i = 0;i<addThis;i++) {
+			reviewOn.addOne();
+		}
 	}
 
-	public void decreasePeriod() {
+	public void decreasePeriod(OurDate today) {
+		reviewOn = new OurDate(today);
 		addThis = 1;
+		reviewOn.addOne();
 	}
 	
 	//Returns a string that is written to a file to be read later.

@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.Collections;
 
 
 public class SubjectTester {
@@ -33,7 +34,17 @@ public class SubjectTester {
 	}
 	
 	public boolean save(String path) {
-		//TODO
+		File f = new File(path);
+		PrintWriter p = null;
+		try {
+			p = new PrintWriter(f);
+			for(int i = 0;i<questions.size();i++) {
+				p.println(questions.get(i).toRecord("\t"));
+			}
+			p.close();
+		} catch (java.io.FileNotFoundException e) {
+			System.out.println("Unable to write to " + f.getAbsolutePath());
+		}
 		return false;
 	}
 	
@@ -71,15 +82,15 @@ public class SubjectTester {
 		}
 		return null;
 	}
-
+	
 	public void run(String path) {
 		LocalDate date;
 		date = LocalDate.now();
 		OurDate today = new OurDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
 		ArrayList<DateQuestion> todayQuestions = new ArrayList<DateQuestion>();
+		ArrayList<DateQuestion> missedQuestions = new ArrayList<DateQuestion>();
 		Scanner input = new Scanner(System.in);
-
-		System.out.println("Running " + path);	
+		boolean previouslyWrong = false;;
 
 		if(load(path)) {
 
@@ -90,28 +101,52 @@ public class SubjectTester {
 				}
 			}
 
+			for(int i = 0;i<questions.size();i++) {
+				System.out.println(questions.get(i).toRecord("\t"));
+			}
+
+			Collections.shuffle(todayQuestions);
+
 			//TODO ask questions to do today
-			for (int i = 0;i<todayQuestions.size();i++) {
-				//TODO as each question is asked, update it in the real list.
-				System.out.println(todayQuestions.get(i).toRecord("\t"));
-				if(ask(todayQuestions.get(i), input) == true) {
-					match(todayQuestions.get(i)).increasePeriod();	
-					System.out.println(match(todayQuestions.get(i)).toRecord("\t"));	
+			while(todayQuestions.size() > 0) {
+				previouslyWrong = false;
+				System.out.printf("%d left.\n", todayQuestions.size());
+
+				//as each question is asked, update it in the real list.
+				for(int i = 0;i<missedQuestions.size();i++) {
+					if(todayQuestions.get(0).getQuestion().equals(missedQuestions.get(i).getQuestion())) {
+						previouslyWrong = true;
+					}
+				}
+
+				if(ask(todayQuestions.get(0), input) == true) {
+					if(previouslyWrong == false) 
+						match(todayQuestions.get(0)).increasePeriod(today);	
+					todayQuestions.remove(0);
 				} else {
-					match(todayQuestions.get(i)).decreasePeriod();
-					System.out.println(match(todayQuestions.get(i)).toRecord("\t"));	
+					match(todayQuestions.get(0)).decreasePeriod(today);
+					todayQuestions.get(0).decreasePeriod(today);
+
+					if(previouslyWrong == false)
+						missedQuestions.add(todayQuestions.get(0));
+
+					todayQuestions.add(new DateQuestion(todayQuestions.get(0)));
+					todayQuestions.remove(0);
 				}
 			}
 			
-			
 			//TODO sort real list
+			System.out.println();
+			for(int i = 0;i<questions.size();i++) {
+				System.out.println(questions.get(i).toRecord("\t"));
+			}
 			
 			//TODO write to disk
+			save(path);
 		}
 	}
 
 	public void add(String path) {
-		System.out.println("Adding to " + path);
 		if(load(path)) {
 			//TODO enter questions into list
 			

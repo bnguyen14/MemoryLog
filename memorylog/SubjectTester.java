@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.Collections;
 
-
 public class SubjectTester {
 
 	ArrayList<DateQuestion> questions;
@@ -101,10 +100,6 @@ public class SubjectTester {
 				}
 			}
 
-			for(int i = 0;i<questions.size();i++) {
-				System.out.println(questions.get(i).toRecord("\t"));
-			}
-
 			Collections.shuffle(todayQuestions);
 
 			//TODO ask questions to do today
@@ -135,13 +130,10 @@ public class SubjectTester {
 				}
 			}
 			
-			//TODO sort real list
-			System.out.println();
-			for(int i = 0;i<questions.size();i++) {
-				System.out.println(questions.get(i).toRecord("\t"));
-			}
+			//sort real list
+			Collections.sort(questions, new DateQuestionComparator());
 			
-			//TODO write to disk
+			//write to disk
 			save(path);
 		}
 	}

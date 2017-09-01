@@ -82,14 +82,14 @@ public class SubjectTester {
 		return null;
 	}
 	
-	public void run(String path) {
+	public void run(String path, Scanner input) {
 		LocalDate date;
 		date = LocalDate.now();
 		OurDate today = new OurDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
 		ArrayList<DateQuestion> todayQuestions = new ArrayList<DateQuestion>();
 		ArrayList<DateQuestion> missedQuestions = new ArrayList<DateQuestion>();
-		Scanner input = new Scanner(System.in);
-		boolean previouslyWrong = false;;
+		boolean previouslyWrong = false;
+		boolean questionsToAnswer = false;
 
 		if(load(path)) {
 
@@ -97,40 +97,87 @@ public class SubjectTester {
 			for(int i = 0;i<questions.size();i++) {
 				if(questions.get(i).getReviewOn().isLesser(today)) {
 					todayQuestions.add(new DateQuestion(questions.get(i)));
+					questionsToAnswer = true;
 				}
 			}
 
-			Collections.shuffle(todayQuestions);
+			if(questionsToAnswer) {
 
-			//TODO ask questions to do today
-			while(todayQuestions.size() > 0) {
-				previouslyWrong = false;
-				System.out.printf("%d left.\n", todayQuestions.size());
+				Collections.shuffle(todayQuestions);
 
-				//as each question is asked, update it in the real list.
-				for(int i = 0;i<missedQuestions.size();i++) {
-					if(todayQuestions.get(0).getQuestion().equals(missedQuestions.get(i).getQuestion())) {
-						previouslyWrong = true;
+				//ask questions to do today
+				while(todayQuestions.size() > 0) {
+					previouslyWrong = false;
+					System.out.printf("%d left.\n", todayQuestions.size());
+
+					//as each question is asked, update it in the real list.
+					for(int i = 0;i<missedQuestions.size();i++) {
+						if(todayQuestions.get(0).getQuestion().equals(missedQuestions.get(i).getQuestion())) {
+							previouslyWrong = true;
+						}
+					}
+
+					if(ask(todayQuestions.get(0), input) == true) {
+						if(previouslyWrong == false) 
+							match(todayQuestions.get(0)).increasePeriod(today);	
+						todayQuestions.remove(0);
+					} else {
+						match(todayQuestions.get(0)).decreasePeriod(today);
+						todayQuestions.get(0).decreasePeriod(today);
+
+						if(previouslyWrong == false)
+							missedQuestions.add(todayQuestions.get(0));
+
+						todayQuestions.add(new DateQuestion(todayQuestions.get(0)));
+						todayQuestions.remove(0);
 					}
 				}
+				
+				//sort real list
+				Collections.sort(questions, new DateQuestionComparator());
+				
+				//write to disk
+				save(path);
+			} else {
+				System.out.println("No questions to answer today.");
+			}
+		}
+	}
 
-				if(ask(todayQuestions.get(0), input) == true) {
-					if(previouslyWrong == false) 
-						match(todayQuestions.get(0)).increasePeriod(today);	
-					todayQuestions.remove(0);
-				} else {
-					match(todayQuestions.get(0)).decreasePeriod(today);
-					todayQuestions.get(0).decreasePeriod(today);
+	public void add(String path, Scanner input) {
+		boolean moreQuestions = true;
+		boolean moreAnswers = true;
+		String question;
+		String answer;
+		ArrayList<String> answers = new ArrayList<String>();
 
-					if(previouslyWrong == false)
-						missedQuestions.add(todayQuestions.get(0));
+		if(load(path)) {
 
-					todayQuestions.add(new DateQuestion(todayQuestions.get(0)));
-					todayQuestions.remove(0);
+			//enter questions into list
+			while(moreQuestions) {
+				moreAnswers = true;
+				answers = new ArrayList<String>();
+				System.out.printf("Question (blank=exit): ");
+				question = input.nextLine();
+				if(question.isEmpty()) {
+					moreQuestions = false;
+				}
+				while (moreQuestions && moreAnswers) {
+					System.out.print("> ");
+					answer = input.nextLine();
+					if(answer.isEmpty())
+						moreAnswers = false;
+					else
+						answers.add(answer);
+					
+					
+				}
+				if(!question.isEmpty() && answers.size() > 0) {
+					questions.add(new DateQuestion(new Question(answers, question)));
 				}
 			}
 			
-			//sort real list
+			//when finised, sort list.
 			Collections.sort(questions, new DateQuestionComparator());
 			
 			//write to disk
@@ -138,18 +185,10 @@ public class SubjectTester {
 		}
 	}
 
-	public void add(String path) {
-		if(load(path)) {
-			//TODO enter questions into list
-			
-			//TODO when finised, sort list.
-			
-			//TODO write to disk
-		}
-	}
-
 
 	public static void main(String[] args) {
+
+		Scanner input = new Scanner(System.in);
 		
 		String usage = "java memorylog.SubjectTester <command> <path/to/subject_file>\n\n" +
 			"Commands: \n" +
@@ -169,10 +208,10 @@ public class SubjectTester {
 			String command = args[0];
 			switch (command) {
 				case "run":
-					subjectTester.run(args[1]);
+					subjectTester.run(args[1], input);
 					break;
 				case "add":
-					subjectTester.add(args[1]);
+					subjectTester.add(args[1], input);
 					break;
 			}
 		}	

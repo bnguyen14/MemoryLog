@@ -17,6 +17,10 @@ public class OurDate {
 		month = 1;
 		year = 2000;
 	}
+	
+	public OurDate(OurDate ourDate) {
+		this(ourDate.day, ourDate.month, ourDate.year);
+	}
 
 	//Creates an OurDate object using inputted information.
 	public OurDate(int dayHolder, int monthHolder, int yearHolder) {
@@ -63,12 +67,16 @@ public class OurDate {
 
 	//Determines if the given OurDate object is equal to another.
 	public boolean isEqual (OurDate dateHolder) {
-		if (dateHolder.calcDays() == this.calcDays()) {
+		if (dateHolder.calcDays() == this.calcDays()) 
 			return true;
-		}
-		else {
+		else
 			return false;
-		}
+	}
+
+	public boolean isLesser (OurDate dateHolder) {
+		if(dateHolder.calcDays() >= this.calcDays())
+			return true;
+		else return false;
 	}
 
 	//Adds one 'day' to the date.

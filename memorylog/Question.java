@@ -4,10 +4,10 @@ import java.util.ArrayList;
 public class Question {
 	
 	//Holds a list of several possible answers to a question.
-	private ArrayList<String> answers;
+	protected ArrayList<String> answers;
 	
 	//Holds a question.
-	private String question;
+	protected String question;
 	
 	public Question() {
 		this.question = null;

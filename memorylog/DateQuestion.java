@@ -37,7 +37,7 @@ public class DateQuestion extends Question {
 		reviewOn = new OurDate(today.getDayOfMonth(), today.getMonthValue(), today.getYear());
 		question = q.question;
 		answers = q.answers;
-		addThis = 1;
+		addThis = 0;
 	}
 	
 	public OurDate getReviewOn() {
@@ -45,7 +45,9 @@ public class DateQuestion extends Question {
 	}
 	
 	public void increasePeriod(OurDate today) {
-		if(addThis%2 == 0) {
+		if(addThis==0) {
+			addThis=1;
+		} else if (addThis%2 == 0) {
 			addThis = (int)(addThis + addThis*0.5);
 		} else {
 			addThis = 1+(int)(addThis + addThis*0.5);

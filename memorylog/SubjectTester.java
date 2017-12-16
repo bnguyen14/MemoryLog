@@ -62,7 +62,7 @@ public class SubjectTester {
 			return true;
 		else {
 			for(int i = 0;i<question.getAnswers().size();i++) {
-				System.out.println(question.getAnswers().get(i));
+				System.out.println("  " + question.getAnswers().get(i));
 			}
 			System.out.print("Confirm (1-Wrong,2-Actually Correct): ");
 			userConfirm = input.nextLine();

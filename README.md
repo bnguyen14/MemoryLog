@@ -7,10 +7,12 @@ you complete a task and go to update it, it will ask you to set the new revision
 of days until you review it again.) - it's up to the user to learn what works best for them. 
 
 Another program called SubjectTester is used to test the user on a "subject". The idea is to load
-an unlimited number of questions into a file, which the program will then ask the user for the
-answers to the ones that need to be reviewed. This is an update to the TestManager program
-described below, but rather than using small sets of questions, the granularity in increased so
-that the questions themselves are the things being tracked in the leitner system.
+a large number of questions into a file, which the program will then ask the user for the answers to
+the ones that need to be reviewed on any specific day. The program uses a basic algorithm involving
+increasing days between review on correct answers and resetting the review period to one day on
+incorrect answers. This is an update to the TestManager program described below, but rather than
+using small sets of questions, the granularity is increased so that the questions themselves are
+the things being tracked rather than a group. 
 
 Another program in this repository is TestManager, which can be used as a rudimentary replacement
 for flash card sets. See the examples directory for information on how to make the files that it

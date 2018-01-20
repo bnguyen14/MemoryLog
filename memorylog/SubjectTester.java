@@ -47,29 +47,53 @@ public class SubjectTester {
 		return false;
 	}
 	
-	public boolean ask(DateQuestion question, Scanner input) {
-		String userConfirm;
+	/*
+	 * Ask the user the passed question and determine if they answered correctly.
+	 * Returns 0 on correct answer, 1 on incorrect answer, and 2 if the user desires to delete
+	 * the question from the file.
+	 */
+	public int ask(DateQuestion question, Scanner input) {
+		String userConfirm = "default";
+		final int DEFAULT =-1;
+		final int FAILURE = 0;
+		final int SUCCESS = 1;
+		final int DELETE  = 2;
 
 		System.out.println(question.getQuestion());	
 		System.out.print("> ");
 		String answer = input.nextLine();
-		boolean foundAnswer = false;
+		boolean answerFound = false;
+
+		/* check if the user's answer exists in the answers. */
 		for (int i = 0;i<question.getAnswers().size();i++) {
 			if(answer.equals(question.getAnswers().get(i))) 
-				foundAnswer = true;
+				return SUCCESS;
 		}
-		if(foundAnswer) 
-			return true;
-		else {
-			for(int i = 0;i<question.getAnswers().size();i++) {
-				System.out.println("  " + question.getAnswers().get(i));
-			}
-			System.out.print("Confirm (1-Wrong,2-Actually Correct): ");
+
+		/* if the answer was not found */
+		/* print out correct answers. */
+		for(int i = 0;i<question.getAnswers().size();i++) {
+			System.out.println("  " + question.getAnswers().get(i));
+		}
+
+		System.out.print("Confirm (1-Wrong,2-Actually Correct,3-Delete Question): ");
+
+		while(userConfirm.equals("default")) {
 			userConfirm = input.nextLine();
-			if(userConfirm.equals("2")) {
-				return true;
-			} else return false;
+			switch(userConfirm) {
+			case "1":
+				return FAILURE;
+			case "2":
+				return SUCCESS;
+			case "3":
+				return DELETE;
+			default:
+				userConfirm = "default";
+				System.out.print("> ");
+			}
 		}
+		/* never executes */
+		return SUCCESS;
 	}
 	
 	//return question that matches the parameter.
@@ -116,20 +140,27 @@ public class SubjectTester {
 							previouslyWrong = true;
 						}
 					}
+					switch(ask(todayQuestions.get(0), input)) {
+						case 0:
+							match(todayQuestions.get(0)).decreasePeriod(today);
+							todayQuestions.get(0).decreasePeriod(today);
 
-					if(ask(todayQuestions.get(0), input) == true) {
-						if(previouslyWrong == false) 
-							match(todayQuestions.get(0)).increasePeriod(today);	
-						todayQuestions.remove(0);
-					} else {
-						match(todayQuestions.get(0)).decreasePeriod(today);
-						todayQuestions.get(0).decreasePeriod(today);
+							if(previouslyWrong == false)
+								missedQuestions.add(todayQuestions.get(0));
 
-						if(previouslyWrong == false)
-							missedQuestions.add(todayQuestions.get(0));
-
-						todayQuestions.add(new DateQuestion(todayQuestions.get(0)));
-						todayQuestions.remove(0);
+							todayQuestions.add(new DateQuestion(todayQuestions.get(0)));
+							todayQuestions.remove(0);
+							break;
+						case 1:
+							if(previouslyWrong == false) 
+								match(todayQuestions.get(0)).increasePeriod(today);	
+							todayQuestions.remove(0);
+							break;
+						case 2:
+							System.out.println("\nDeleted question.");
+							questions.remove(match(todayQuestions.get(0)));
+							todayQuestions.remove(0);
+							break;
 					}
 				}
 				

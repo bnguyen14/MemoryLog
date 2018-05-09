@@ -57,6 +57,8 @@ class MemoryLog {
 			boolean tempToggleable = false;
 			ArrayList<String> tempModifiers = new ArrayList<String>();
 			int tempModifierIdentifier = 0;
+			boolean tempRecurring = false;
+			int tempRecurringInt = 0;
 			String record = null;
 
 			//While there is still information in the file.
@@ -153,12 +155,25 @@ class MemoryLog {
 				sb = new StringBuilder();
 
 				//Get the modifierIdentifier from the file
-				for (;offset < record.length();offset++) {
+				for (;record.charAt(offset) != '\t';offset++) {
 					sb.append(record.charAt(offset));
 				}
 				tempModifierIdentifier = Integer.parseInt(sb.toString());
+				offset++;
+				sb = new StringBuilder();
 
-				entries.add(new Item(tempQuiz, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempToggleable, tempModifiers, tempModifierIdentifier ));
+				//Get the recurring flag from the file
+				while(offset < record.length()) {
+					sb.append(record.charAt(offset));
+					offset++;
+				}
+				tempRecurringInt = Integer.parseInt(sb.toString());
+				tempRecurring = tempRecurringInt == 0 ? false : true;
+
+				entries.add(new Item(tempQuiz, tempHistory, tempAddThis,
+				            new OurDate(tempDay, tempMonth, tempYear), tempTitle,
+				            tempToggleable, tempModifiers, tempModifierIdentifier,
+				            tempRecurring));
 				tempModifiers = new ArrayList<String>();
 				tempHistory = new ArrayList<Integer>();
 			}
@@ -166,8 +181,8 @@ class MemoryLog {
 	}
 
 	/*
-	 * Takes the information stored in the entries ArrayList and writes it to a file to be read by
-	 * loadEntries or by a user on the computer.
+	 * Takes the information stored in the entries ArrayList and writes it to a file to be read
+	 * by loadEntries or by a user on the computer.
 	 */
 	public void saveEntries() {
 		System.out.print("Confirm save: 0-Yes/1-No: ");
@@ -193,7 +208,8 @@ class MemoryLog {
 					p = new PrintWriter(itemList);
 				}
 				catch (java.io.FileNotFoundException e) {
-					System.out.println("There was a problem when writing to the file.");
+					System.out.println("There was a problem when writing to" +
+					                   " the file.");
 				}
 	
 				for (int i = 0;i<entries.size();i++) {
@@ -307,9 +323,14 @@ class MemoryLog {
 					//Show current record information
 					System.out.println(String.format("\nCurrent: ") + entries.get(index).toString());
 					System.out.println("History: " + entries.get(index).showHistory());
-					System.out.print("Set new addThis: ");
-					int addThis = scan.nextInt();
-					scan.nextLine();
+					int addThis = entries.get(index).getAddThis();
+
+					//Only update addThis if it's a non-recurring item.
+					if(!entries.get(index).isRecurring()) {
+						System.out.print("Set new addThis: ");
+						addThis = scan.nextInt();
+						scan.nextLine();
+					}
 					
 					//Create an item to display what the entry will be changed to before it happens.
 					Item tempItem = new Item(entries.get(index));
@@ -376,6 +397,7 @@ class MemoryLog {
 		ArrayList<String> tempModifiers = new ArrayList<String>();
 		int tempModifierIdentifier = 0;
 		boolean noExceptionThrown = true;
+		boolean tempRecurring = false;
 
 		int holder;
 
@@ -401,6 +423,10 @@ class MemoryLog {
 			if (holder == 0)
 				tempToggleable = true;
 			else tempToggleable = false;
+			System.out.print("Recurring? 0-Yes/1-No: ");
+			holder = scan.nextInt();
+			tempRecurring = holder == 0 ? true : false;
+				
 		}
 		catch (java.util.InputMismatchException e) {
 			System.out.println("Invalid input, cancelling addition.");
@@ -414,20 +440,20 @@ class MemoryLog {
 
 			//If the user has a modifiable entry
 			if (tempToggleable == true) {
-				System.out.print("Enter modifier: ");
+				System.out.print("Enter first toggle modifier: ");
 				tempModifiers.add(scan.nextLine());
 				System.out.print("Continue? 0-Yes/1-No: ");
 				try {
 					int holder2 = scan.nextInt();
 					scan.nextLine();
 					while (holder2 != 1) {
-						System.out.print("Enter modifier: ");
+						System.out.print("Enter next toggle modifier: ");
 						tempModifiers.add(scan.nextLine());
 						System.out.print("Continue? 0-Yes/1-No: ");
 						holder2 = scan.nextInt();
 						scan.nextLine();
 					}
-					System.out.print("Enter starting identifier: ");
+					System.out.print("Enter starting toggle modifier (first is 1): ");
 					tempModifierIdentifier = scan.nextInt();
 					scan.nextLine();
 				}
@@ -443,7 +469,7 @@ class MemoryLog {
 			if (noExceptionThrown) {
 				ArrayList<Integer> tempHistory = new ArrayList<Integer>();
 				tempHistory.add(tempAddThis);
-				entries.add(new Item(null, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempToggleable, tempModifiers, tempModifierIdentifier));
+				entries.add(new Item(null, tempHistory, tempAddThis, new OurDate(tempDay, tempMonth, tempYear), tempTitle, tempToggleable, tempModifiers, tempModifierIdentifier, tempRecurring));
 				System.out.println();
 			}
 		}
@@ -558,9 +584,9 @@ class MemoryLog {
 		} catch (java.io.FileNotFoundException e) {
 			System.out.println("Failed to load quizzes: could not find config file/perhaps a quiz is missing?");
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-			System.out.println("Unable to read auto_memory_log.txt.");
+			System.out.println("ArrayIndexOutOfBoundsException: Unable to read auto_memory_log.txt.");
 		} catch (java.lang.NumberFormatException e) {
-			System.out.println("Unable to read auto_memory_log.txt.");
+			System.out.println("NumberFormatException: Unable to read auto_memory_log.txt.");
 		}
 	}
 }

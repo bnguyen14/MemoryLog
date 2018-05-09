@@ -1,6 +1,7 @@
 package memorylog;
 
 import java.util.ArrayList;
+
 public class Item {
 
 	//Quiz that is associated
@@ -15,7 +16,8 @@ public class Item {
 	//The action that the user should take to push the item further down the list.
 	private String title;
 
-	//If true, the item's action changes per review period(ie. review slides 1st/2nd of 1-10, 11-20).
+	//If true, the item's action changes per review period (ie. review slides 1st/2nd
+	//of 1-10, 11-20).
 	private boolean toggleable;
 
 	//Holds the possible split actions that change each review period.
@@ -27,11 +29,16 @@ public class Item {
 	//Holds the current item from modifiers that user should next perform (ie. 1st, 2nd, etc.).
 	private int modifierIdentifier;
 
-	public Item() {
-		this(null, null, 0, null, null, false, null, 1);
-	}//End constructor()
+	//Set if this item will never change it's addThis.
+	private boolean recurring;
 
-	public Item(Quiz quiz, ArrayList<Integer> addThisHistory, int addThis, OurDate reviewOn, String title, boolean toggleable, ArrayList<String> modifiers, int modifierIdentifier) {
+	public Item() {
+		this(null, null, 0, null, null, false, null, 1, false);
+	}
+
+	public Item(Quiz quiz, ArrayList<Integer> addThisHistory, int addThis, OurDate reviewOn,
+	            String title, boolean toggleable, ArrayList<String> modifiers,
+	            int modifierIdentifier, boolean recurring) {
 		this.quiz = quiz;
 		this.addThisHistory = addThisHistory;
 		this.addThis = addThis;
@@ -40,7 +47,8 @@ public class Item {
 		this.toggleable = toggleable;
 		this.modifiers = modifiers;
 		this.modifierIdentifier = modifierIdentifier;
-	}//End constructor(int, OurDate, String, boolean, ArrayList<String>)
+		this.recurring = recurring;
+	}
 	
 	public Item(Item item) {
 		this.quiz = item.quiz;
@@ -57,7 +65,8 @@ public class Item {
 			this.modifiers.add(item.modifiers.get(i).toString());
 		}
 		this.modifierIdentifier = item.modifierIdentifier;
-	}//End constructor(Item)
+		this.recurring = item.recurring;
+	}
 
 	//Returns a string representation of the object to be used in viewEntries() in MemoryLog.java.
 	public String toString() {
@@ -65,6 +74,11 @@ public class Item {
 
 		sb.append(reviewOn.getYear() + "-" + String.format("%02d", reviewOn.getMonth()) + "-" + String.format("%02d", reviewOn.getDay()));
 		sb.append("(" + String.format("%03d", addThis) + ") ");
+		if(recurring) {
+			sb.append("LOCKED ");
+		} else {
+			sb.append("       ");
+		}
 		sb.append(title);
 		if (toggleable == true) {
 			sb.append(" [Option " + modifierIdentifier + " of ");
@@ -78,7 +92,7 @@ public class Item {
 			}
 		}
 		return sb.toString();
-	}//End toString()
+	}
 
 	//Stores the information in the object in a record that can be written and read from a file.
 	public String toRecord() {
@@ -96,19 +110,20 @@ public class Item {
 		}
 		sb.append(reviewOn.getYear() + "\t" + reviewOn.getMonth() + "\t" + reviewOn.getDay() + "\t");
 		sb.append(title + "\t");
-		if(toggleable)
-			sb.append("1\t");
-		else sb.append("0\t");
+		sb.append(toggleable ? "1\t" : "0\t");
 		for (int i = 0;i<modifiers.size();i++) {
 			sb.append(modifiers.get(i).toString() + "\t");
 		}
-		sb.append(".\t" + modifierIdentifier);
+		sb.append(".\t" + modifierIdentifier + "\t");
+		sb.append(recurring ? "1" : "0");
 		return sb.toString();
-	}//End toRecord()
-	
+	}
 
 	//Show the contents of the history variable.
 	public String showHistory() {
+		if(recurring) {
+			return "Recurring (LOCKED) item";
+		}
 		if(addThisHistory.size() == 0) {
 			return "None.";
 		}
@@ -197,4 +212,8 @@ public class Item {
 	public void setModifierIdentifier(int a) {
 		modifierIdentifier = a;
 	}//End setModifierIdentifier
+
+	public boolean isRecurring() {
+		return recurring;
+	}
 }

@@ -60,6 +60,9 @@ NOTE: If you make a mistake, just complete the prompts and then delete the entry
 5. You can decide if your entry has modifiers. For example, if you have a set of math problems, you
 	can have it tell you to do the odd problems on one reviewing and the even problems on the
 	next reviewing. Modifiers are simply strings that you enter.
+6. Now decide if the "add this" value should ever change. For example, if you know in advance that
+	you'll always have to do a task each week, you don't want the program to ask you to enter 7 every
+	time - set this option to disable "add this" updates.
 
 You should have your entry set up now, when you say to display today's entries, your entry should
 appear there as long as it's review date is either today or in the past.

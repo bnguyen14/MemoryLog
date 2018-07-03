@@ -236,8 +236,14 @@ class MemoryLog {
 	}
 
 	//Changes an entry, adding days to the reviewOn and incrementing the modifier identifier.
-	public void processIndex(Item passedItem, int addThis) {
-		passedItem.setAddThis(addThis);
+	public void processIndex(Item passedItem, int addThis, boolean messages, boolean isRecurring) {
+		int refinedAddThis = 0;
+
+		/* Only refine addThis if it is not recurring. */
+		if(!isRecurring) {
+			refinedAddThis = refineAddThis(addThis, messages);
+			passedItem.setAddThis(refinedAddThis);
+		}
 		
 		//Set date to current date, start to add days.
 		OurDate today = new OurDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
@@ -245,6 +251,10 @@ class MemoryLog {
 		for (int i = 0;i<passedItem.getAddThis();i++) {
 			passedItem.getReviewOn().addOne();
 		}
+
+		//reset the addThis to what it should have been originally - so that the refinement
+		//doesn't keep shrinking it each time.
+		passedItem.setAddThis(addThis);
 		
 		//Change modifierIdentifier if entry has modifiers.
 		if (passedItem.getToggleable()) {
@@ -257,6 +267,75 @@ class MemoryLog {
 			}
 		}
 		
+	}
+
+	/* adjusts an addThis value to help even out items to complete to prevent days with lots.
+	 * It accomplishes this by finding a range of days that the entry could be placed in based
+	 * on the passed addThis value. The algorithm is x +- (x * 0.25). So an add this of 8 could
+	 * change to anywhere between 6 and 10. It will choose the day that has the fewest
+	 * entries in that range of days surrounding the original addThis. */
+	public int refineAddThis(int addThis, boolean messages) {
+		int min = addThis;
+		int max = addThis;
+		int change = 0;
+		int updatedAddThis = addThis;
+		int numItemsOnTestDay = 0;
+		int minItemsOnTestDay = 0;
+		OurDate today = new OurDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
+		Item testItem = new Item();
+		testItem.setReviewOn(today);
+
+		/* decide what the min and max should be, accounting for special cases that are too
+		 * small for the algorithm to make sense. */
+		switch(addThis) {
+			case 1:
+				min = 1;
+				max = 1;
+				break;
+			case 2:
+				min = 2;
+				max = 3;
+				break;
+			case 3:
+				min = 2;
+				max = 4;
+				break;
+			default:
+				change = (int)((float)addThis * 0.25);
+				min = addThis-change;
+				max = addThis+change;
+		}
+
+		/* Try each date in the range and find the one with the least number of items. */
+		for(int i = min;i<max+1;i++) {
+			numItemsOnTestDay = 0;
+			today.setDay(date.getDayOfMonth());
+			today.setMonth(date.getMonthValue());
+			today.setYear(date.getYear());
+			for(int j = 0;j<i;j++) {
+				today.addOne();
+			}
+			for(int j = 0;j<entries.size();j++) {
+				if(entries.get(j).getReviewOn().calcDays() == today.calcDays()) {
+					numItemsOnTestDay++;
+				}
+			}
+
+			if (messages)
+				System.out.printf("%02d ", numItemsOnTestDay);
+
+			if(i == min) {
+				minItemsOnTestDay = numItemsOnTestDay;
+			} else if(numItemsOnTestDay < minItemsOnTestDay) {
+				minItemsOnTestDay = numItemsOnTestDay;
+				updatedAddThis = i;
+			}
+		}
+		if(messages && updatedAddThis != addThis) {
+			System.out.print("\nRefined addThis is " + updatedAddThis);
+		}
+
+		return updatedAddThis;
 	}
 
 	//Prints out entries based on the numbers within a passed array.
@@ -334,7 +413,13 @@ class MemoryLog {
 					
 					//Create an item to display what the entry will be changed to before it happens.
 					Item tempItem = new Item(entries.get(index));
-					processIndex(tempItem, addThis);
+
+					/* pass flag to only refine addThis of entry that is not recurring. */
+					if(entries.get(index).isRecurring()) {
+						processIndex(tempItem, addThis, true, true);
+					} else {
+						processIndex(tempItem, addThis, true, false);
+					}
 
 					//Show new record information
 					System.out.println(String.format("\n%10s", "Previous: ") + entries.get(index).toString());
@@ -344,7 +429,14 @@ class MemoryLog {
 					scan.nextLine();
 					System.out.println();
 					if (checker == 0) {
-						processIndex(entries.get(index), addThis);
+
+						/* pass flag to only refine addThis of entry that is not recurring. */
+						if(entries.get(index).isRecurring()) {
+							processIndex(entries.get(index), addThis, true, true);
+						} else {
+							processIndex(entries.get(index), addThis, true, false);
+						}
+
 						entries.get(index).updateHistory(addThis,historySize);
 						Collections.sort(entries, new DateComparator());
 					}

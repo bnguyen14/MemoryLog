@@ -326,6 +326,7 @@ class MemoryLog {
 
 			if(i == min) {
 				minItemsOnTestDay = numItemsOnTestDay;
+				updatedAddThis = i;
 			} else if(numItemsOnTestDay < minItemsOnTestDay) {
 				minItemsOnTestDay = numItemsOnTestDay;
 				updatedAddThis = i;

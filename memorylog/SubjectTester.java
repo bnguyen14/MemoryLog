@@ -153,7 +153,7 @@ public class SubjectTester {
 							break;
 						case 1:
 							if(previouslyWrong == false) 
-								match(todayQuestions.get(0)).increasePeriod(today);	
+								match(todayQuestions.get(0)).increasePeriod(new OurDate(today), questions);	
 							todayQuestions.remove(0);
 							break;
 						case 2:
@@ -215,7 +215,6 @@ public class SubjectTester {
 			save(path);
 		}
 	}
-
 
 	public static void main(String[] args) {
 

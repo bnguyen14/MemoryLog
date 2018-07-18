@@ -12,7 +12,7 @@ public class DateQuestion extends Question {
 		addThis=0;
 		reviewOn = null;
 	}
-	
+
 	public DateQuestion(DateQuestion dateQuestion) {
 		super(dateQuestion.answers, dateQuestion.question);
 		this.addThis = dateQuestion.addThis;
@@ -29,7 +29,7 @@ public class DateQuestion extends Question {
 			answers.add(fields[i]);
 		}
 	}
-	
+
 	public DateQuestion(Question q) {
 		LocalDate today;
 		today = LocalDate.now();
@@ -39,7 +39,7 @@ public class DateQuestion extends Question {
 		answers = q.answers;
 		addThis = 0;
 	}
-	
+
 	public OurDate getReviewOn() {
 		return this.reviewOn;
 	}
@@ -146,13 +146,13 @@ public class DateQuestion extends Question {
 		addThis = 1;
 		reviewOn.addOne();
 	}
-	
+
 	//Returns a string that is written to a file to be read later.
 	public String toRecord(String recordDelimiter) {
 		StringBuilder sb = new StringBuilder();
 		//Write addThis
 		sb.append(addThis + recordDelimiter);
-	
+
 		//Write date
 		sb.append(reviewOn.getYear() + recordDelimiter);
 		sb.append(reviewOn.getMonth() + recordDelimiter);
@@ -165,8 +165,7 @@ public class DateQuestion extends Question {
 		for (int i = 0;i<answers.size();i++) {
 			sb.append(answers.get(i) + recordDelimiter);
 		}
-		
+
 		return sb.toString();
 	}
-
 }

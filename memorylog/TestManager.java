@@ -19,8 +19,8 @@ public class TestManager {
 	public void runTest(String path) {
 		Scanner input = new Scanner(System.in);
 		if(loadQuiz(path)) {
-			System.out.println("Taking quiz " + path);	
-			Collections.shuffle(questions);		
+			System.out.println("Taking quiz " + path);
+			Collections.shuffle(questions);
 			while(questions.size() > 0) {
 				System.out.println(questions.size() + " left.");
 				if(ask(questions.get(0), input) == true)
@@ -36,7 +36,7 @@ public class TestManager {
 	public boolean ask(Question question, Scanner input) {
 		String userConfirm;
 
-		System.out.println(question.getQuestion());	
+		System.out.println(question.getQuestion());
 		System.out.print("> ");
 		String answer = input.nextLine();
 		boolean foundAnswer = false;

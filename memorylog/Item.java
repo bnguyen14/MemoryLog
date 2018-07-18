@@ -156,62 +156,62 @@ public class Item {
 	//Getter for addThis.
 	public int getAddThis() {
 		return addThis;
-	}//End getAddThis()
+	}
 
 	//Setter for addThis.
 	public void setAddThis(int addThis) {
 		this.addThis = addThis;
-	}//End setAddThis()
+	}
 
 	//Getter for reviewOn.
 	public OurDate getReviewOn() {
 		return reviewOn;
-	}//End getReviewOn()
+	}
 
 	//Setter for reviewOn.
 	public void setReviewOn(OurDate reviewOn) {
 		this.reviewOn = reviewOn;
-	}//End setReviewOn(OurDate)
+	}
 
 	//Getter for title.
 	public String getTitle() {
 		return title;
-	}//End getTitle()
+	}
 
 	//Setter for title.
 	public void setTitle(String title) {
 		this.title = title;
-	}//End setTitle(String)
+	}
 
 	//Getter for toggleable.
 	public boolean getToggleable() {
 		return toggleable;
-	}//End getToggleable;
+	}
 
 	//Setter for toggleable.
 	public void setToggleable(boolean toogleable) {
 		this.toggleable = toggleable;
-	}//End setToggleable(boolean)
+	}
 
 	//Getter for modifiers.
 	public ArrayList<String> getModifiers() {
 		return modifiers;
-	}//End getModifiers()
+	}
 
 	//Setter for modifiers.
 	public void setModifiers(ArrayList<String> modiiers) {
 		this.modifiers = modifiers;
-	}//End setModifiers(ArrayList<String>);
+	}
 	
 	//Getter for modifierIdentifier
 	public int getModifierIdentifier() {
 		return modifierIdentifier;
-	}//End getModifierIdentifier()
+	}
 	
 	//Setter for modifierIdentifier
 	public void setModifierIdentifier(int a) {
 		modifierIdentifier = a;
-	}//End setModifierIdentifier
+	}
 
 	public boolean isRecurring() {
 		return recurring;

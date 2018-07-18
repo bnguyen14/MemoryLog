@@ -31,7 +31,7 @@ public class SubjectTester {
 			return false;
 		}
 	}
-	
+
 	public boolean save(String path) {
 		File f = new File(path);
 		PrintWriter p = null;
@@ -46,7 +46,7 @@ public class SubjectTester {
 		}
 		return false;
 	}
-	
+
 	/*
 	 * Ask the user the passed question and determine if they answered correctly.
 	 * Returns 0 on correct answer, 1 on incorrect answer, and 2 if the user desires to delete
@@ -59,14 +59,14 @@ public class SubjectTester {
 		final int SUCCESS = 1;
 		final int DELETE  = 2;
 
-		System.out.println(question.getQuestion());	
+		System.out.println(question.getQuestion());
 		System.out.print("> ");
 		String answer = input.nextLine();
 		boolean answerFound = false;
 
 		/* check if the user's answer exists in the answers. */
 		for (int i = 0;i<question.getAnswers().size();i++) {
-			if(answer.equals(question.getAnswers().get(i))) 
+			if(answer.equals(question.getAnswers().get(i)))
 				return SUCCESS;
 		}
 
@@ -95,7 +95,7 @@ public class SubjectTester {
 		/* never executes */
 		return SUCCESS;
 	}
-	
+
 	//return question that matches the parameter.
 	public DateQuestion match(DateQuestion question) {
 		for(int i = 0;i<questions.size();i++) {
@@ -105,7 +105,7 @@ public class SubjectTester {
 		}
 		return null;
 	}
-	
+
 	public void run(String path, Scanner input) {
 		LocalDate date;
 		date = LocalDate.now();
@@ -152,8 +152,8 @@ public class SubjectTester {
 							todayQuestions.remove(0);
 							break;
 						case 1:
-							if(previouslyWrong == false) 
-								match(todayQuestions.get(0)).increasePeriod(new OurDate(today), questions);	
+							if(previouslyWrong == false)
+								match(todayQuestions.get(0)).increasePeriod(new OurDate(today), questions);
 							todayQuestions.remove(0);
 							break;
 						case 2:
@@ -163,10 +163,10 @@ public class SubjectTester {
 							break;
 					}
 				}
-				
+
 				//sort real list
 				Collections.sort(questions, new DateQuestionComparator());
-				
+
 				//write to disk
 				save(path);
 			} else {
@@ -200,17 +200,17 @@ public class SubjectTester {
 						moreAnswers = false;
 					else
 						answers.add(answer);
-					
-					
+
+
 				}
 				if(!question.isEmpty() && answers.size() > 0) {
 					questions.add(new DateQuestion(new Question(answers, question)));
 				}
 			}
-			
+
 			//when finised, sort list.
 			Collections.sort(questions, new DateQuestionComparator());
-			
+
 			//write to disk
 			save(path);
 		}
@@ -219,7 +219,7 @@ public class SubjectTester {
 	public static void main(String[] args) {
 
 		Scanner input = new Scanner(System.in);
-		
+
 		String usage = "java memorylog.SubjectTester <command> <path/to/subject_file>\n\n" +
 			"Commands: \n" +
 			"run\n" +
@@ -244,6 +244,6 @@ public class SubjectTester {
 					subjectTester.add(args[1], input);
 					break;
 			}
-		}	
+		}
 	}
 }

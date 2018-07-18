@@ -4,7 +4,9 @@ A utility that helps the user keep track of a leitner-style spaced repitition st
 program allows a user to have reminders for when they need to review something up to a precision of
 days. The days between studying periods are user-set, and the program is not intelligent. Each time
 you complete a task and go to update it, it will ask you to set the new revision period (the number
-of days until you review it again.) - it's up to the user to learn what works best for them. 
+of days until you review it again.) - it's up to the user to learn what works best for them.
+The program will however automatically spread out entries to make the load more predictable. Though
+this only really makes sense when there are a lot of entries in the manager.
 
 Another program called SubjectTester is used to test the user on a "subject". The idea is to load
 a large number of questions into a file, which the program will then ask the user for the answers to
@@ -17,6 +19,9 @@ the things being tracked rather than a group.
 Another program in this repository is TestManager, which can be used as a rudimentary replacement
 for flash card sets. See the examples directory for information on how to make the files that it
 takes.
+
+Together, these three programs offer a considerable tool to study information, learn new
+information, and keep track of recurring events.
   
 # Compilation
 
@@ -47,7 +52,7 @@ files in the examples directory.
 4. Save your file. You can put it anywhere, but keep track of the path.
 
 With your quiz completed, you can now execute the quiz using the TestManager program. See the
-Running section for information on how to do that.
+Running section.
 
 Now we will make an entry for this quiz in MemoryLog so that you can use it as a spaced repitition
 helper.
@@ -80,9 +85,10 @@ To run through questions in a SubjectTester file:
 
 To add questions to a subject file (This can be done manually but it's a bit faster this way.)
 This will start an interactive prompt that will ask you for questions and answers:
-	
+
 	java memorylog.SubjectTester add <path/to/subject_file>
-	
+
+Note that the empty subject file must exist before running this command.
 
 To take a quiz that you've made:
 

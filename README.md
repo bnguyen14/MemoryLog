@@ -25,7 +25,7 @@ information, and keep track of recurring events.
 
 # Original work that uses console is pulled from Aroweeri, https://github.com/Aroweeri/MemoryLog
 Note: this was done for a class project. This branch of MemoryLog does not have full functionality 
-implemented to work with GUI. ie, deleting questions, adding multiple answers. Changes and additions
+implemented to work with GUI. ie, deleting questions, adding multiple answers, images also do not work. Changes and additions
 were made by https://github.com/bnguyen14 and https://github.com/Nguyen2010
 
 # Implementation:

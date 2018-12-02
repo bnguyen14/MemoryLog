@@ -29,26 +29,23 @@ implemented to work with GUI. ie, deleting questions, adding multiple answers. C
 were made by https://github.com/bnguyen14 and https://github.com/Nguyen2010
 
 # Implementation:
-Added GUI for easier use:\n
--Main Menu
--Add Questions
--Deep - quiz that uses SRS system
--General - quiz that chooses at most of 8 random questions to go through and shuffles them
--Review/Practice - shows questions on the front and can reveal answer in the back, like a flashcard
- (Currently there are two buttons that goes to the same GUI
+Added GUI for easier use:  
+-Main Menu  
+-Add Questions  
+-Deep - quiz that uses SRS system  
+-General - quiz that chooses at most of 8 random questions to go through and shuffles them  
+-Review/Practice - shows questions on the front and can reveal answer in the back, like a flashcard (Currently there are two buttons that goes to the same GUI  
 
 # Changes:
--Modified SubjectTester to accept parameters from GUI
-	-the add method now accepts a question and answer (only one answer for the sake of time).
-	-the run method returns a list of questions for today.
-	-a sizable chunck of algorithm from the ask method was moved and modified in SRSquiz class
-	 to go through today's questions.
+-Modified SubjectTester to accept parameters from GUI  
+	-the add method now accepts a question and answer (only one answer for the sake of time).  
+	-the run method returns a list of questions for today.  
+	-a sizable chunck of algorithm from the ask method was moved and modified in SRSquiz class to go through today's questions.  
 # Additions:
--Main - for the main menu
--AddQuestionsFrame - to add questions
--SRSquiz - explained in deep
--QuizRun/QuizConts - explained in general
--FlashCard/FlashCardA - explained in review/practice
--QuizTester - class that works like SubjectTester, but with slight modification and does not save to
- savedQuiz
--ChooseQuiz - menu for selecting different studying types
+-Main - for the main menu  
+-AddQuestionsFrame - to add questions  
+-SRSquiz - explained in deep  
+-QuizRun/QuizConts - explained in general  
+-FlashCard/FlashCardA - explained in review/practice  
+-QuizTester - class that works like SubjectTester, but with slight modification and does not save to savedQuiz  
+-ChooseQuiz - menu for selecting different studying types  

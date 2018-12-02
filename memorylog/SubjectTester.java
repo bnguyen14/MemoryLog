@@ -9,241 +9,115 @@ import java.util.Collections;
 
 public class SubjectTester {
 
-	ArrayList<DateQuestion> questions;
-	String recordDelimiter = "\t";
+ ArrayList<DateQuestion> questions;
+ String recordDelimiter = "\t";
+ String path = "savedQuiz.txt";
+ public SubjectTester() {
+  questions = new ArrayList<DateQuestion>();
+ }
 
-	public SubjectTester() {
-		questions = new ArrayList<DateQuestion>();
-	}
+ public boolean load() {
+  File f = new File(path);
+  Scanner s = null;
+  try {
+   s = new Scanner(f);
+   while(s.hasNextLine()) {
+    questions.add(new DateQuestion(s.nextLine(), recordDelimiter));
+   }
+   s.close();
+   return true;
+  } catch (java.io.FileNotFoundException e) {
+   System.out.println("Unable to read " + f.getAbsolutePath());
+   return false;
+  }
+ }
 
-	public boolean load(String path) {
-		File f = new File(path);
-		Scanner s = null;
-		try {
-			s = new Scanner(f);
-			while(s.hasNextLine()) {
-				questions.add(new DateQuestion(s.nextLine(), recordDelimiter));
-			}
-			s.close();
-			return true;
-		} catch (java.io.FileNotFoundException e) {
-			System.out.println("Unable to read " + f.getAbsolutePath());
-			return false;
-		}
-	}
+ public boolean save() {
+  Collections.sort(questions, new DateQuestionComparator());
+  File f = new File(path);
+  PrintWriter p = null;
+  try {
+   p = new PrintWriter(f);
+   for(int i = 0;i<questions.size();i++) {
+    p.println(questions.get(i).toRecord("\t"));
+   }
+   p.close();
+  } catch (java.io.FileNotFoundException e) {
+   System.out.println("Unable to write to " + f.getAbsolutePath());
+  }
+  return false;
+ }
 
-	public boolean save(String path) {
-		File f = new File(path);
-		PrintWriter p = null;
-		try {
-			p = new PrintWriter(f);
-			for(int i = 0;i<questions.size();i++) {
-				p.println(questions.get(i).toRecord("\t"));
-			}
-			p.close();
-		} catch (java.io.FileNotFoundException e) {
-			System.out.println("Unable to write to " + f.getAbsolutePath());
-		}
-		return false;
-	}
+ public int ask(DateQuestion question, String answer){
+  String userConfirm = "default";
+  //final int DEFAULT =-1;
+  final int FAILURE = 0;
+  final int SUCCESS = 1;
+  //final int DELETE  = 2;
+  for (int i = 0;i<question.getAnswers().size();i++) {
+    if(answer.equals(question.getAnswers().get(i)))
+      return SUCCESS;
+  }
+  return FAILURE;
+ }
 
-	/*
-	 * Ask the user the passed question and determine if they answered correctly.
-	 * Returns 0 on correct answer, 1 on incorrect answer, and 2 if the user desires to delete
-	 * the question from the file.
-	 */
-	public int ask(DateQuestion question, Scanner input) {
-		String userConfirm = "default";
-		final int DEFAULT =-1;
-		final int FAILURE = 0;
-		final int SUCCESS = 1;
-		final int DELETE  = 2;
+ //return question that matches the parameter.
+ public DateQuestion match(DateQuestion question) {
+  for(int i = 0;i<questions.size();i++) {
+   if(questions.get(i).getQuestion().equals(question.getQuestion())) {
+    return questions.get(i);
+   }
+  }
+  return null;
+ }
 
-		System.out.println(question.getQuestion());
-		System.out.print("> ");
-		String answer = input.nextLine();
-		boolean answerFound = false;
+ public ArrayList<DateQuestion> run() {
+  Scanner input = new Scanner(System.in);
+  LocalDate date;
+  date = LocalDate.now();
+  OurDate today = new OurDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
+  ArrayList<DateQuestion> todayQuestions = new ArrayList<DateQuestion>();
+  ArrayList<DateQuestion> missedQuestions = new ArrayList<DateQuestion>();
+  boolean previouslyWrong = false;
+  boolean questionsToAnswer = false;
 
-		/* check if the user's answer exists in the answers. */
-		for (int i = 0;i<question.getAnswers().size();i++) {
-			if(answer.equals(question.getAnswers().get(i)))
-				return SUCCESS;
-		}
+  if(load()) {
 
-		/* if the answer was not found */
-		/* print out correct answers. */
-		for(int i = 0;i<question.getAnswers().size();i++) {
-			System.out.println("  " + question.getAnswers().get(i));
-		}
+   //find questions to do today 
+   for(int i = 0;i<questions.size();i++) {
+    if(questions.get(i).getReviewOn().isLesser(today)) {
+     todayQuestions.add(new DateQuestion(questions.get(i)));
+     questionsToAnswer = true;
+    }
+   }
 
-		System.out.print("Confirm (1-Wrong,2-Actually Correct,3-Delete Question): ");
+   if(questionsToAnswer) {
 
-		while(userConfirm.equals("default")) {
-			userConfirm = input.nextLine();
-			switch(userConfirm) {
-			case "1":
-				return FAILURE;
-			case "2":
-				return SUCCESS;
-			case "3":
-				return DELETE;
-			default:
-				userConfirm = "default";
-				System.out.print("> ");
-			}
-		}
-		/* never executes */
-		return SUCCESS;
-	}
+    Collections.shuffle(todayQuestions);
+    //ask questions to do today
+    return todayQuestions;
+   }
+  }
+  return null;
+ }
 
-	//return question that matches the parameter.
-	public DateQuestion match(DateQuestion question) {
-		for(int i = 0;i<questions.size();i++) {
-			if(questions.get(i).getQuestion().equals(question.getQuestion())) {
-				return questions.get(i);
-			}
-		}
-		return null;
-	}
+ public void add(String a, String q) {
+  Scanner input = new Scanner(System.in);
+  boolean moreQuestions = true;
+  boolean moreAnswers = true;
+  String question = q;
+  String answer = a;
+  ArrayList<String> answers = new ArrayList<String>();
 
-	public void run(String path, Scanner input) {
-		LocalDate date;
-		date = LocalDate.now();
-		OurDate today = new OurDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
-		ArrayList<DateQuestion> todayQuestions = new ArrayList<DateQuestion>();
-		ArrayList<DateQuestion> missedQuestions = new ArrayList<DateQuestion>();
-		boolean previouslyWrong = false;
-		boolean questionsToAnswer = false;
+  if(load()) {
+    answers.add(answer);
+    questions.add(new DateQuestion(new Question(answers, question)));
 
-		if(load(path)) {
+   //when finised, sort list.
+   Collections.sort(questions, new DateQuestionComparator());
 
-			//find questions to do today	
-			for(int i = 0;i<questions.size();i++) {
-				if(questions.get(i).getReviewOn().isLesser(today)) {
-					todayQuestions.add(new DateQuestion(questions.get(i)));
-					questionsToAnswer = true;
-				}
-			}
-
-			if(questionsToAnswer) {
-
-				Collections.shuffle(todayQuestions);
-
-				//ask questions to do today
-				while(todayQuestions.size() > 0) {
-					previouslyWrong = false;
-					System.out.printf("%d left.\n", todayQuestions.size());
-
-					//as each question is asked, update it in the real list.
-					for(int i = 0;i<missedQuestions.size();i++) {
-						if(todayQuestions.get(0).getQuestion().equals(missedQuestions.get(i).getQuestion())) {
-							previouslyWrong = true;
-						}
-					}
-					switch(ask(todayQuestions.get(0), input)) {
-						case 0:
-							match(todayQuestions.get(0)).decreasePeriod(today);
-							todayQuestions.get(0).decreasePeriod(today);
-
-							if(previouslyWrong == false)
-								missedQuestions.add(todayQuestions.get(0));
-
-							todayQuestions.add(new DateQuestion(todayQuestions.get(0)));
-							todayQuestions.remove(0);
-							break;
-						case 1:
-							if(previouslyWrong == false)
-								match(todayQuestions.get(0)).increasePeriod(new OurDate(today), questions);
-							todayQuestions.remove(0);
-							break;
-						case 2:
-							System.out.println("\nDeleted question.");
-							questions.remove(match(todayQuestions.get(0)));
-							todayQuestions.remove(0);
-							break;
-					}
-				}
-
-				//sort real list
-				Collections.sort(questions, new DateQuestionComparator());
-
-				//write to disk
-				save(path);
-			} else {
-				System.out.println("No questions to answer today.");
-			}
-		}
-	}
-
-	public void add(String path, Scanner input) {
-		boolean moreQuestions = true;
-		boolean moreAnswers = true;
-		String question;
-		String answer;
-		ArrayList<String> answers = new ArrayList<String>();
-
-		if(load(path)) {
-
-			//enter questions into list
-			while(moreQuestions) {
-				moreAnswers = true;
-				answers = new ArrayList<String>();
-				System.out.printf("Question (blank=exit): ");
-				question = input.nextLine();
-				if(question.isEmpty()) {
-					moreQuestions = false;
-				}
-				while (moreQuestions && moreAnswers) {
-					System.out.print("> ");
-					answer = input.nextLine();
-					if(answer.isEmpty())
-						moreAnswers = false;
-					else
-						answers.add(answer);
-
-
-				}
-				if(!question.isEmpty() && answers.size() > 0) {
-					questions.add(new DateQuestion(new Question(answers, question)));
-				}
-			}
-
-			//when finised, sort list.
-			Collections.sort(questions, new DateQuestionComparator());
-
-			//write to disk
-			save(path);
-		}
-	}
-
-	public static void main(String[] args) {
-
-		Scanner input = new Scanner(System.in);
-
-		String usage = "java memorylog.SubjectTester <command> <path/to/subject_file>\n\n" +
-			"Commands: \n" +
-			"run\n" +
-			"\tRun the given subject file.\n" +
-			"add\n" +
-			"\tAdd questions to the given subject file.\n";
-
-		if(args.length != 2) {
-			System.out.println("Wrong number of arguments.");
-			System.out.println(usage);
-		} else if (!args[0].equals("add") && !args[0].equals("run")) {
-			System.out.println("Unrecognized command.");
-			System.out.println(usage);
-		} else {
-			SubjectTester subjectTester = new SubjectTester();
-			String command = args[0];
-			switch (command) {
-				case "run":
-					subjectTester.run(args[1], input);
-					break;
-				case "add":
-					subjectTester.add(args[1], input);
-					break;
-			}
-		}
-	}
+   //write to disk
+   save();
+  }
+ }
 }

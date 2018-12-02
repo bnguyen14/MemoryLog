@@ -22,74 +22,33 @@ takes.
 
 Together, these three programs offer a considerable tool to study information, learn new
 information, and keep track of recurring events.
-  
-# Compilation
 
-Install the Java JDK so that you can compile the source.
-cd to the MemoryLog directory.
-Compile the source:
+# Original work that uses console is pulled from Aroweeri, https://github.com/Aroweeri/MemoryLog
+Note: this was done for a class project. This branch of MemoryLog does not have full functionality 
+implemented to work with GUI. ie, deleting questions, adding multiple answers. Changes and additions
+were made by https://github.com/bnguyen14 and https://github.com/Nguyen2010
 
-	javac memorylog.MemoryLog.java
-	javac memorylog.TestManager.java
-	javac memorylog.SubjectTester.java
+# Implementation:
+Added GUI for easier use:
+-Main Menu
+-Add Questions
+-Deep - quiz that uses SRS system
+-General - quiz that chooses at most of 8 random questions to go through and shuffles them
+-Review/Practice - shows questions on the front and can reveal answer in the back, like a flashcard
+ (Currently there are two buttons that goes to the same GUI
 
-# SubjectTester Setup
-
-In order to use this program, you have to pass it a quiz file to take. You can do this by using the
-subprogram "add" as described in the "Running" section.
-It is used to create questions and sets the proper date and initial review time for the question.
-
-# TestManager Setup
-
-We'll now create quiz in a text file, let the program be able to access it, and then create an entry
-for it in the program. You can see the example configuration.txt as well as the format of the quiz
-files in the examples directory.
-
-1. Create a new file and start editing it.
-2. On the next line, think of a question you want to enter. Write it's answer, and then tab once
-	(You can have multiple answers as long as they are tab separated).
-3. Write the question.
-4. Save your file. You can put it anywhere, but keep track of the path.
-
-With your quiz completed, you can now execute the quiz using the TestManager program. See the
-Running section.
-
-Now we will make an entry for this quiz in MemoryLog so that you can use it as a spaced repitition
-helper.
-NOTE: If you make a mistake, just complete the prompts and then delete the entry afterwards. 
-
-1. In the program menu (run the program), select the option to add an entry.
-2. "Add this" means how many days inbetween reviewing there are. It's probably best to start with 1.
-3. Enter the date on which it will appear in the program (probably choose the current date).
-4. Name your entry.
-5. You can decide if your entry has modifiers. For example, if you have a set of math problems, you
-	can have it tell you to do the odd problems on one reviewing and the even problems on the
-	next reviewing. Modifiers are simply strings that you enter.
-6. Now decide if the "add this" value should ever change. For example, if you know in advance that
-	you'll always have to do a task each week, you don't want the program to ask you to enter 7 every
-	time - set this option to disable "add this" updates.
-
-You should have your entry set up now, when you say to display today's entries, your entry should
-appear there as long as it's review date is either today or in the past.
-
-# Running
-
-To execute MemoryLog, make sure you first have the program compiled, see the section on compilation
-if you didn't do this.
-
-	java memorylog.MemoryLog
-
-To run through questions in a SubjectTester file:
-
-	java memorylog.SubjectTester run <path/to/subject_file>
-
-To add questions to a subject file (This can be done manually but it's a bit faster this way.)
-This will start an interactive prompt that will ask you for questions and answers:
-
-	java memorylog.SubjectTester add <path/to/subject_file>
-
-Note that the empty subject file must exist before running this command.
-
-To take a quiz that you've made:
-
-	java memorylog.TestManager <path/to/quiz>
+# Changes:
+-Modified SubjectTester to accept parameters from GUI
+	-the add method now accepts a question and answer (only one answer for the sake of time).
+	-the run method returns a list of questions for today.
+	-a sizable chunck of algorithm from the ask method was moved and modified in SRSquiz class
+	 to go through today's questions.
+# Additions:
+-Main - for the main menu
+-AddQuestionsFrame - to add questions
+-SRSquiz - explained in deep
+-QuizRun/QuizConts - explained in general
+-FlashCard/FlashCardA - explained in review/practice
+-QuizTester - class that works like SubjectTester, but with slight modification and does not save to
+ savedQuiz
+-ChooseQuiz - menu for selecting different studying types

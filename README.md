@@ -29,7 +29,7 @@ implemented to work with GUI. ie, deleting questions, adding multiple answers. C
 were made by https://github.com/bnguyen14 and https://github.com/Nguyen2010
 
 # Implementation:
-Added GUI for easier use:
+Added GUI for easier use:\n
 -Main Menu
 -Add Questions
 -Deep - quiz that uses SRS system
